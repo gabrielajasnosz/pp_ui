@@ -3,7 +3,6 @@ import "./AddCertificateForm.scss"
 import { Input } from "../../../components/Input/Input";
 import {Button} from "@mui/material";
 import {SepoliaService} from "../../../ethereum/SepoliaService";
-import {contractAddress, privateKey} from "../../../ethereum/Credentials";
 
 export const AddCertificateForm = () => {
     const [receiverName, setReceiverName] = useState<string>("");
@@ -13,8 +12,10 @@ export const AddCertificateForm = () => {
 
 
     const submitForm =  () => {
-        const sepoliaService = new SepoliaService(contractAddress, privateKey);
-        sepoliaService.addCertificate("gabrysia", receiverName, receiverLastName).then(r => console.log(r));
+        const sepoliaService = new SepoliaService();
+        sepoliaService.addCertificate("dominika", receiverName, receiverLastName)
+            .then(r => console.log(r))
+            .catch((e) => { console.log(e)});
     }
 
     return (
