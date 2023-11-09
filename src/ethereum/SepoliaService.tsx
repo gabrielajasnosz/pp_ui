@@ -1,5 +1,5 @@
 
-import {ethers, FetchRequest} from "ethers";
+import { ethers } from "ethers";
 import { CertificateRepository } from "./CertificateRepository";
 import { contractABI } from "./ContractAbi";
 import {contractAddress, privateKey} from "./Credentials";
@@ -12,10 +12,11 @@ export class SepoliaService {
 
     constructor() {
         //Sepolia Testnet RPC URL
-        const sepoliaTestnetRPC = "https://ethereum-sepolia.publicnode.com/";
-        const fetchRequest = new FetchRequest(sepoliaTestnetRPC)
-        fetchRequest.setHeader("Access-Control-Allow-Origin", "*")
-        this.provider = new ethers.JsonRpcProvider(fetchRequest)
+        const sepoliaTestnetRPC = "https://rpc.sepolia.org";
+        // const sepoliaTestnetRPC = "https://endpoints.omniatech.io/v1/eth/sepolia/public/";
+        // const fetchRequest = new FetchRequest(sepoliaTestnetRPC)
+        // fetchRequest.setHeader("Access-Control-Allow-Origin", "*")
+        this.provider = new ethers.JsonRpcProvider(sepoliaTestnetRPC)
         this.wallet = new ethers.Wallet(privateKey, this.provider);
         this.contractAddress = contractAddress
     }
