@@ -12,7 +12,7 @@ export class SepoliaService {
 
     constructor() {
         //Sepolia Testnet RPC URL
-        const sepoliaTestnetRPC = "https://rpc.sepolia.org";
+        const sepoliaTestnetRPC = "https://ethereum-sepolia.publicnode.com";
         // const sepoliaTestnetRPC = "https://endpoints.omniatech.io/v1/eth/sepolia/public/";
         // const fetchRequest = new FetchRequest(sepoliaTestnetRPC)
         // fetchRequest.setHeader("Access-Control-Allow-Origin", "*")
