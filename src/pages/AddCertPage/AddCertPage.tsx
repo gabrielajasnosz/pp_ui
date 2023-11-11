@@ -1,10 +1,10 @@
 import React from 'react'
-import './MainPage.scss'
-import { ConnectMetaMaskButton } from './ConnectMetaMaskButton/ConnectMetaMaskButton'
+import './AddCertPage.scss'
+import { AddCertificateForm } from '../AddCertPage/AddCertificateForm/AddCertificateForm'
+import { ConnectMetaMaskButton } from '../MainPage/ConnectMetaMaskButton/ConnectMetaMaskButton'
 import { useMetaMask } from '../../hooks/useMetaMask'
-import { LinksContainer } from './LinksContainer/LinksContainer'
 
-export const MainPage = () => {
+export const AddCertPage = () => {
   const {
     wallet: { accounts },
     hasProvider,
@@ -17,7 +17,7 @@ export const MainPage = () => {
 
   return (
     <div className={'main-page'}>
-      {isConnected ? <LinksContainer /> : <ConnectMetaMaskButton />}
+      {isConnected ? <AddCertificateForm /> : <ConnectMetaMaskButton />}
     </div>
   )
 }

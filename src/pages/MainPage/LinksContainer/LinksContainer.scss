@@ -1,0 +1,23 @@
+.link-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 380px;
+    padding: 30px 0;
+    background-color: #efefef;
+    border-radius: 10px;
+  
+    &__header {
+      justify-self: center;
+      font-size: 20px;
+      font-weight: bold;
+    }
+  
+    &__content {
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      margin-top: 20px;
+      gap: 15px
+    }
+  }
