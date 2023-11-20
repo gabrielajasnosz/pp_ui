@@ -1,16 +1,16 @@
-import { ethers } from 'ethers'
-import { CertificateRepository } from './CertificateRepository'
-import { contractABI } from './ContractAbi'
+import { ethers } from 'ethers';
+import { CertificateRepository } from './CertificateRepository';
+import { contractABI } from './ContractAbi';
 
-export const CONTRACT_ADDRESS = '0x144a8aAc52452777ebC8E2901610470654d6AaD8'
+export const CONTRACT_ADDRESS = '0xb94233eae5AE1E93924bB87dAd97489C9B252fF4';
 
 export class BlockchainService {
-  private readonly provider: ethers.BrowserProvider
-  private contractAddress: string
+  private readonly provider: ethers.BrowserProvider;
+  private contractAddress: string;
 
   constructor() {
-    this.provider = new ethers.BrowserProvider(window.ethereum)
-    this.contractAddress = CONTRACT_ADDRESS
+    this.provider = new ethers.BrowserProvider(window.ethereum);
+    this.contractAddress = CONTRACT_ADDRESS;
   }
 
   /**
@@ -21,8 +21,8 @@ export class BlockchainService {
         returns: Promise object of string type
     */
   public async getCertificate(checkSum: string): Promise<string> {
-    const signer = await this.provider.getSigner()
-    return await this.getContract(signer).getCertificate(checkSum)
+    const signer = await this.provider.getSigner();
+    return await this.getContract(signer).getCertificate(checkSum);
   }
 
   /**
@@ -33,8 +33,8 @@ export class BlockchainService {
         returns: Promise object of string type
     */
   public async addTrustedIssuer(issuerAddress: string): Promise<string> {
-    const signer = await this.provider.getSigner()
-    return await this.getContract(signer).addTrustedIssuer(issuerAddress)
+    const signer = await this.provider.getSigner();
+    return await this.getContract(signer).addTrustedIssuer(issuerAddress);
   }
 
   /**
@@ -51,16 +51,16 @@ export class BlockchainService {
     recipientName: string,
     recipientSurname: string,
     daysValid: string,
-    certUrl: string
+    certUrl: string,
   ): Promise<string> {
-    const signer = await this.provider.getSigner()
+    const signer = await this.provider.getSigner();
     return await this.getContract(signer).addCertificate(
       checkSum,
       recipientName,
       recipientSurname,
       parseInt(daysValid),
-      certUrl
-    )
+      certUrl,
+    );
   }
 
   /**
@@ -71,15 +71,15 @@ export class BlockchainService {
         returns: Promise object of string type
     */
   public async removeTrustedIssuer(issuerAddress: string): Promise<string> {
-    const signer = await this.provider.getSigner()
-    return await this.getContract(signer).removeTrustedIssuer(issuerAddress)
+    const signer = await this.provider.getSigner();
+    return await this.getContract(signer).removeTrustedIssuer(issuerAddress);
   }
 
   private getContract(signer: ethers.ContractRunner) {
     return new ethers.Contract(
       this.contractAddress,
       contractABI,
-      this.provider
-    ).connect(signer) as CertificateRepository
+      this.provider,
+    ).connect(signer) as CertificateRepository;
   }
 }

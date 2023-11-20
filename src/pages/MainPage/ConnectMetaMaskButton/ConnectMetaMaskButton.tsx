@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
-import { Button } from '@mui/material'
-import { useMetaMask } from '../../../hooks/useMetaMask'
+import React, { useState } from 'react';
+import { Button } from '@mui/material';
+import { useMetaMask } from '../../../hooks/useMetaMask';
 
 export const ConnectMetaMaskButton: React.FC = () => {
-  const { isConnecting, connectMetaMask } = useMetaMask()
+  const { isConnecting, connectMetaMask } = useMetaMask();
 
   return (
     <>
@@ -19,5 +19,5 @@ export const ConnectMetaMaskButton: React.FC = () => {
         </Button>
       )}
     </>
-  )
-}
+  );
+};

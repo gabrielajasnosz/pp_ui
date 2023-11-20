@@ -31,36 +31,36 @@
 }
 
 .check-contract-data {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    padding: 30px 0;
-    background-color: #efefef;
-    border-radius: 10px;
-    white-space: nowrap;
-    margin-top: 20px;
-  
-    &__header {
-      justify-self: center;
-      font-size: 20px;
-      font-weight: bold;
-    }
-  
-    &__content {
-      display: flex;
-      flex-direction: column;
-      margin-top: 20px;
-      padding: 20px;
-      gap: 15px;
-    }
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 30px 0;
+  background-color: #efefef;
+  border-radius: 10px;
+  white-space: nowrap;
+  margin-top: 20px;
+
+  &__header {
+    justify-self: center;
+    font-size: 20px;
+    font-weight: bold;
   }
 
-.code_bracket{
+  &__content {
     display: flex;
     flex-direction: column;
-    width: 360px;
+    margin-top: 20px;
+    padding: 20px;
+    gap: 15px;
+  }
+}
+
+.code_bracket {
+  display: flex;
+  flex-direction: column;
+  width: 360px;
 }
 
 .row {
-    margin: 0px 4px;
+  margin: 0px 4px;
 }

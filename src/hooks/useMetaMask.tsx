@@ -5,8 +5,8 @@ import {
   PropsWithChildren,
   useContext,
   useCallback,
-} from "react";
-import detectEthereumProvider from "@metamask/detect-provider";
+} from 'react';
+import detectEthereumProvider from '@metamask/detect-provider';
 
 declare global {
   interface Window {
@@ -32,26 +32,26 @@ interface MetaMaskContextData {
 
 const disconnectedState: WalletState = {
   accounts: [],
-  balance: "",
-  chainId: "",
+  balance: '',
+  chainId: '',
 };
 
 const MetaMaskContext = createContext<MetaMaskContextData>(
-  {} as MetaMaskContextData
+  {} as MetaMaskContextData,
 );
 
 export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
   const [wallet, setWallet] = useState(disconnectedState);
   const [hasProvider, setHasProvider] = useState<boolean | null>(null);
   const [isConnecting, setIsConnecting] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const clearError = () => setErrorMessage("");
+  const clearError = () => setErrorMessage('');
 
   const _updateWallet = useCallback(async (providedAccounts?: any) => {
     const accounts =
       providedAccounts ||
-      (await window.ethereum.request({ method: "eth_accounts" }));
+      (await window.ethereum.request({ method: 'eth_accounts' }));
 
     if (!accounts.length) {
       // If there are no accounts, then the user is disconnected
@@ -61,13 +61,13 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
 
     const balance = formatBalance(
       await window.ethereum.request({
-        method: "eth_getBalance",
-        params: [accounts[0], "latest"],
-      })
+        method: 'eth_getBalance',
+        params: [accounts[0], 'latest'],
+      }),
     );
 
     const chainId = await window.ethereum.request({
-      method: "eth_chainId",
+      method: 'eth_chainId',
     });
 
     setWallet({ accounts, balance, chainId });
@@ -75,11 +75,11 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
 
   const updateWalletAndAccounts = useCallback(
     () => _updateWallet(),
-    [_updateWallet]
+    [_updateWallet],
   );
   const updateWallet = useCallback(
     (accounts: any) => _updateWallet(accounts),
-    [_updateWallet]
+    [_updateWallet],
   );
 
   /**
@@ -95,16 +95,16 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
 
       if (provider) {
         updateWalletAndAccounts();
-        window.ethereum.on("accountsChanged", updateWallet);
-        window.ethereum.on("chainChanged", updateWalletAndAccounts);
+        window.ethereum.on('accountsChanged', updateWallet);
+        window.ethereum.on('chainChanged', updateWalletAndAccounts);
       }
     };
 
     getProvider();
 
     return () => {
-      window.ethereum?.removeListener("accountsChanged", updateWallet);
-      window.ethereum?.removeListener("chainChanged", updateWalletAndAccounts);
+      window.ethereum?.removeListener('accountsChanged', updateWallet);
+      window.ethereum?.removeListener('chainChanged', updateWalletAndAccounts);
     };
   }, [updateWallet, updateWalletAndAccounts]);
 
@@ -113,7 +113,7 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
 
     try {
       const accounts = await window.ethereum.request({
-        method: "eth_requestAccounts",
+        method: 'eth_requestAccounts',
       });
       clearError();
       updateWallet(accounts);
@@ -144,7 +144,7 @@ export const useMetaMask = () => {
   const context = useContext(MetaMaskContext);
   if (context === undefined) {
     throw new Error(
-      'useMetaMask must be used within a "MetaMaskContextProvider"'
+      'useMetaMask must be used within a "MetaMaskContextProvider"',
     );
   }
   return context;

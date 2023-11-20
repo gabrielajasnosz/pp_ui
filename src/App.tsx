@@ -1,11 +1,11 @@
-import React from 'react'
-import './App.css'
-import { MainPage } from './pages/MainPage/MainPage'
-import { MetaMaskContextProvider } from './hooks/useMetaMask'
+import React from 'react';
+import './App.css';
+import { MainPage } from './pages/MainPage/MainPage';
+import { MetaMaskContextProvider } from './hooks/useMetaMask';
 
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import { CheckCertPage } from './pages/CheckCertPage/CheckCertPage'
-import { AddCertPage } from './pages/AddCertPage/AddCertPage'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { CheckCertPage } from './pages/CheckCertPage/CheckCertPage';
+import { AddCertPage } from './pages/AddCertPage/AddCertPage';
 
 const router = createBrowserRouter([
   {
@@ -20,7 +20,7 @@ const router = createBrowserRouter([
     path: '/add-certificate',
     element: <AddCertPage />,
   },
-])
+]);
 
 function App() {
   return (
@@ -29,7 +29,7 @@ function App() {
         <RouterProvider router={router} />
       </div>
     </MetaMaskContextProvider>
-  )
+  );
 }
 
-export default App
+export default App;

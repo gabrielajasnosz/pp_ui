@@ -1,42 +1,42 @@
-import React, { useState } from 'react'
-import './AddCertificateForm.scss'
-import { Input } from '../../../components/Input/Input'
-import { Button } from '@mui/material'
-import { BlockchainService } from '../../../ethereum/BlockchainService'
-import { useGetFileHash } from '../../../hooks/useFileReader'
+import React, { useState } from 'react';
+import './AddCertificateForm.scss';
+import { Input } from '../../../components/Input/Input';
+import { Button } from '@mui/material';
+import { BlockchainService } from '../../../ethereum/BlockchainService';
+import { useGetFileHash } from '../../../hooks/useFileReader';
 
 export const AddCertificateForm = () => {
-  const [receiverName, setReceiverName] = useState<string>('')
-  const [receiverLastName, setReceiverLastName] = useState<string>('')
-  const [certUrl, setCertUrl] = useState<string>('')
-  const [certDuration, setCertDuration] = useState<string>('')
+  const [receiverName, setReceiverName] = useState<string>('');
+  const [receiverLastName, setReceiverLastName] = useState<string>('');
+  const [certUrl, setCertUrl] = useState<string>('');
+  const [certDuration, setCertDuration] = useState<string>('');
 
-  const [hash, getHash] = useGetFileHash()
+  const [hash, getHash] = useGetFileHash();
 
   const submitForm = (): void => {
     if (hash) {
-      const service = new BlockchainService()
+      const service = new BlockchainService();
       service
         .addCertificate(
           hash,
           receiverName,
           receiverLastName,
           certDuration,
-          certUrl
+          certUrl,
         )
         .then((r) => console.log(r))
         .catch((e) => {
-          console.log(e)
-        })
+          console.log(e);
+        });
     }
-  }
+  };
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
+    const file = e.target.files?.[0];
     if (file) {
-      getHash(file)
+      getHash(file);
     }
-  }
+  };
 
   return (
     <div className={'add-certificate-form'}>
@@ -80,5 +80,5 @@ export const AddCertificateForm = () => {
         </Button>
       </div>
     </div>
-  )
-}
+  );
+};

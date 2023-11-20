@@ -1,5 +1,5 @@
-import React from 'react'
-import './LinksContainer.scss'
+import React from 'react';
+import './LinksContainer.scss';
 import { Link } from '@mui/material';
 
 export const LinksContainer: React.FC = () => {
@@ -11,5 +11,5 @@ export const LinksContainer: React.FC = () => {
         <Link href="/add-certificate">Add certificate</Link>
       </div>
     </div>
-  )
-}
+  );
+};

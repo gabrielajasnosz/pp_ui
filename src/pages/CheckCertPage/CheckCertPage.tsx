@@ -1,42 +1,42 @@
-import React, { useState } from 'react'
-import { useGetFileHash } from '../../hooks/useFileReader'
-import { Button } from '@mui/material'
-import { BlockchainService } from '../../ethereum/BlockchainService'
-import { Utils } from './utils'
-import './CheckCertPage.scss'
+import React, { useState } from 'react';
+import { useGetFileHash } from '../../hooks/useFileReader';
+import { Button } from '@mui/material';
+import { BlockchainService } from '../../ethereum/BlockchainService';
+import { Utils } from './utils';
+import './CheckCertPage.scss';
 
 export interface CertResponse {
-  checksum: string
-  issueDate: Date | string
-  expireDate: Date | string
-  issuer: string
-  certUrl: string
-  firstName: string
-  secondName: string
+  checksum: string;
+  issueDate: Date | string;
+  expireDate: Date | string;
+  issuer: string;
+  certUrl: string;
+  firstName: string;
+  secondName: string;
 }
 
 export const CheckCertPage: React.FC = () => {
-  const [hash, getHash] = useGetFileHash()
-  const [response, setResponse] = useState<CertResponse | undefined>()
+  const [hash, getHash] = useGetFileHash();
+  const [response, setResponse] = useState<CertResponse | undefined>();
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
+    const file = e.target.files?.[0];
     if (file) {
-      getHash(file)
+      getHash(file);
     }
-  }
+  };
 
   const submit = () => {
-    const service = new BlockchainService()
+    const service = new BlockchainService();
     if (hash) {
       service
         .getCertificate(hash)
         .then((r) => {
-          setResponse(Utils.convertToResponse(Utils.toObject(r)))
+          setResponse(Utils.convertToResponse(Utils.toObject(r)));
         })
-        .catch((e) => console.log(e))
+        .catch((e) => console.log(e));
     }
-  }
+  };
 
   return (
     <div className={'contract-page'}>
@@ -75,5 +75,5 @@ export const CheckCertPage: React.FC = () => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
