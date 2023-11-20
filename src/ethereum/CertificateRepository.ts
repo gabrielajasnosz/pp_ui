@@ -11,4 +11,5 @@ export interface CertificateRepository extends BaseContract {
     _cert_url: string,
   ): Promise<any>;
   removeTrustedIssuer(_issuer: string): Promise<any>;
+  isTrustedIssuer(_issuer: string): Promise<any>;
 }

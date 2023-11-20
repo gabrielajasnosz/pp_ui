@@ -37,6 +37,11 @@ export class BlockchainService {
     return await this.getContract(signer).addTrustedIssuer(issuerAddress);
   }
 
+  public async isTrustedIssuer(): Promise<string> {
+    const signer = await this.provider.getSigner()
+    return await this.getContract(signer).isTrustedIssuer(signer.address);
+  }
+
   /**
         Function used to add new certificate. Only trusted issuers can perform this action.
 

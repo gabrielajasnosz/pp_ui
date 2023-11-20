@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react'
 import './LinksContainer.scss';
 import {
   Collapse,
@@ -19,11 +19,12 @@ import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import { useMetaMask } from '../../../hooks/useMetaMask'
 
 export const LinksContainer: React.FC = () => {
-  const [manageCertificatesOpened, setManageCertificatesOpened] =
-    React.useState(false);
+  const [manageCertificatesOpened, setManageCertificatesOpened] = React.useState(false);
   const [manageIssuersOpened, setManageIssuersOpened] = React.useState(false);
+  const { isUserTrustedIssuer } = useMetaMask();
 
   return (
     <div className={'link-container'}>
@@ -50,62 +51,66 @@ export const LinksContainer: React.FC = () => {
           </ListItemIcon>
           <ListItemText primary="Check Certificate" />
         </ListItemButton>
-        <Divider />
-        <ListItemButton
-          onClick={() => setManageCertificatesOpened(!manageCertificatesOpened)}
-        >
-          <ListItemIcon>
-            <SettingsApplicationsIcon color={'success'} />
-          </ListItemIcon>
-          <ListItemText primary="Manage certificates" />
-          {manageCertificatesOpened ? <ExpandLess /> : <ExpandMore />}
-        </ListItemButton>
-        <Collapse in={manageCertificatesOpened} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
+        {isUserTrustedIssuer && (
+          <>
+            <Divider />
             <ListItemButton
-              sx={{ pl: 4 }}
-              component="a"
-              href="/add-certificate"
+              onClick={() => setManageCertificatesOpened(!manageCertificatesOpened)}
             >
               <ListItemIcon>
-                <AddIcon />
+                <SettingsApplicationsIcon color={'success'} />
               </ListItemIcon>
-              <ListItemText primary="Add certificate" />
+              <ListItemText primary="Manage certificates" />
+              {manageCertificatesOpened ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
-            <ListItemButton sx={{ pl: 4 }}>
+            <Collapse in={manageCertificatesOpened} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItemButton
+                  sx={{ pl: 4 }}
+                  component="a"
+                  href="/add-certificate"
+                >
+                  <ListItemIcon>
+                    <AddIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Add certificate" />
+                </ListItemButton>
+                <ListItemButton sx={{ pl: 4 }} component="a" href="/invalidate-certificate">
+                  <ListItemIcon>
+                    <RemoveCircleOutlineIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Invalidate certificate" />
+                </ListItemButton>
+              </List>
+            </Collapse>
+            <Divider />
+            <ListItemButton
+              onClick={() => setManageIssuersOpened(!manageIssuersOpened)}
+            >
               <ListItemIcon>
-                <RemoveCircleOutlineIcon />
+                <ManageAccountsIcon color={'success'} />
               </ListItemIcon>
-              <ListItemText primary="Invalidate certificate" />
+              <ListItemText primary="Manage issuers" />
+              {manageIssuersOpened ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
-          </List>
-        </Collapse>
-        <Divider />
-        <ListItemButton
-          onClick={() => setManageIssuersOpened(!manageIssuersOpened)}
-        >
-          <ListItemIcon>
-            <ManageAccountsIcon color={'success'} />
-          </ListItemIcon>
-          <ListItemText primary="Manage issuers" />
-          {manageIssuersOpened ? <ExpandLess /> : <ExpandMore />}
-        </ListItemButton>
-        <Collapse in={manageIssuersOpened} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItemButton sx={{ pl: 4 }}>
-              <ListItemIcon>
-                <PersonAddIcon />
-              </ListItemIcon>
-              <ListItemText primary="Add issuer" />
-            </ListItemButton>
-            <ListItemButton sx={{ pl: 4 }}>
-              <ListItemIcon>
-                <PersonRemoveIcon />
-              </ListItemIcon>
-              <ListItemText primary="Remove issuer" />
-            </ListItemButton>
-          </List>
-        </Collapse>
+            <Collapse in={manageIssuersOpened} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItemButton sx={{ pl: 4 }} component="a" href="/add-issuer">
+                  <ListItemIcon>
+                    <PersonAddIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Add issuer" />
+                </ListItemButton>
+                <ListItemButton sx={{ pl: 4 }} component="a" href="/remove-issuer">
+                  <ListItemIcon>
+                    <PersonRemoveIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Remove issuer" />
+                </ListItemButton>
+              </List>
+            </Collapse>
+          </>
+        )}
       </List>
     </div>
   );

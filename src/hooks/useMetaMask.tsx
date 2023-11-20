@@ -7,6 +7,7 @@ import {
   useCallback,
 } from 'react';
 import detectEthereumProvider from '@metamask/detect-provider';
+import { BlockchainService } from '../ethereum/BlockchainService'
 
 declare global {
   interface Window {
@@ -28,6 +29,7 @@ interface MetaMaskContextData {
   isConnecting: boolean;
   connectMetaMask: () => void;
   clearError: () => void;
+  isUserTrustedIssuer: boolean
 }
 
 const disconnectedState: WalletState = {
@@ -45,6 +47,7 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
   const [hasProvider, setHasProvider] = useState<boolean | null>(null);
   const [isConnecting, setIsConnecting] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [isUserTrustedIssuer, setIsUserTrustedIssuer] = useState(false);
 
   const clearError = () => setErrorMessage('');
 
@@ -97,6 +100,7 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
         updateWalletAndAccounts();
         window.ethereum.on('accountsChanged', updateWallet);
         window.ethereum.on('chainChanged', updateWalletAndAccounts);
+        getTrustedIssuerInfo();
       }
     };
 
@@ -107,6 +111,17 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
       window.ethereum?.removeListener('chainChanged', updateWalletAndAccounts);
     };
   }, [updateWallet, updateWalletAndAccounts]);
+
+
+  const getTrustedIssuerInfo = () => {
+    const service = new BlockchainService();
+    service
+      .isTrustedIssuer()
+      .then((r) => {
+        setIsUserTrustedIssuer(Boolean(r))
+      })
+      .catch((e) => console.log(e));
+  }
 
   const connectMetaMask = async () => {
     setIsConnecting(true);
@@ -133,6 +148,7 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
         isConnecting,
         connectMetaMask,
         clearError,
+        isUserTrustedIssuer
       }}
     >
       {children}
