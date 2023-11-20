@@ -4,6 +4,7 @@ import { Button } from '@mui/material';
 import { BlockchainService } from '../../ethereum/BlockchainService';
 import { Utils } from './utils';
 import './CheckCertPage.scss';
+import { FileUploadButton } from '../../components/FileUploadButton/FileUploadButton';
 
 export interface CertResponse {
   checksum: string;
@@ -18,10 +19,12 @@ export interface CertResponse {
 export const CheckCertPage: React.FC = () => {
   const [hash, getHash] = useGetFileHash();
   const [response, setResponse] = useState<CertResponse | undefined>();
+  const [fileName, setFileName] = useState<string | undefined>();
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      setFileName(file.name);
       getHash(file);
     }
   };
@@ -41,15 +44,17 @@ export const CheckCertPage: React.FC = () => {
   return (
     <div className={'contract-page'}>
       <div className={'check-contract-form'}>
+        <span className={'check-contract-form__header'}>
+          Check certificate status
+        </span>
         <div className={'check-contract-form__content'}>
-          <input type="file" onChange={handleOnChange}></input>
-
+          <FileUploadButton fileName={fileName} onChange={handleOnChange} />
           <Button
             variant="contained"
             type={'submit'}
             size={'medium'}
             onClick={() => submit()}
-            sx={{ height: '50px', marginTop: '5px' }}
+            sx={{ height: '50px', marginTop: '5px', fontWeight: 'bold' }}
           >
             Check
           </Button>

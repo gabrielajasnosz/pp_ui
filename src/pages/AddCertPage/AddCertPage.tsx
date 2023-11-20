@@ -1,7 +1,7 @@
 import React from 'react';
 import './AddCertPage.scss';
 import { AddCertificateForm } from '../AddCertPage/AddCertificateForm/AddCertificateForm';
-import { ConnectMetaMaskButton } from '../MainPage/ConnectMetaMaskButton/ConnectMetaMaskButton';
+import { ConnectToMetaMask } from '../MainPage/ConnectToMetaMask/ConnectToMetaMask';
 import { useMetaMask } from '../../hooks/useMetaMask';
 
 export const AddCertPage = () => {
@@ -17,7 +17,7 @@ export const AddCertPage = () => {
 
   return (
     <div className={'main-page'}>
-      {isConnected ? <AddCertificateForm /> : <ConnectMetaMaskButton />}
+      {isConnected ? <AddCertificateForm /> : <ConnectToMetaMask />}
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import './MainPage.scss';
-import { ConnectMetaMaskButton } from './ConnectMetaMaskButton/ConnectMetaMaskButton';
+import { ConnectToMetaMask } from './ConnectToMetaMask/ConnectToMetaMask';
 import { useMetaMask } from '../../hooks/useMetaMask';
 import { LinksContainer } from './LinksContainer/LinksContainer';
 
@@ -17,7 +17,7 @@ export const MainPage = () => {
 
   return (
     <div className={'main-page'}>
-      {isConnected ? <LinksContainer /> : <ConnectMetaMaskButton />}
+      {isConnected ? <LinksContainer /> : <ConnectToMetaMask />}
     </div>
   );
 };

@@ -4,12 +4,14 @@ import { Input } from '../../../components/Input/Input';
 import { Button } from '@mui/material';
 import { BlockchainService } from '../../../ethereum/BlockchainService';
 import { useGetFileHash } from '../../../hooks/useFileReader';
+import { FileUploadButton } from '../../../components/FileUploadButton/FileUploadButton';
 
 export const AddCertificateForm = () => {
   const [receiverName, setReceiverName] = useState<string>('');
   const [receiverLastName, setReceiverLastName] = useState<string>('');
   const [certUrl, setCertUrl] = useState<string>('');
   const [certDuration, setCertDuration] = useState<string>('');
+  const [fileName, setFileName] = useState<string | undefined>(undefined);
 
   const [hash, getHash] = useGetFileHash();
 
@@ -34,6 +36,7 @@ export const AddCertificateForm = () => {
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      setFileName(file.name);
       getHash(file);
     }
   };
@@ -67,14 +70,13 @@ export const AddCertificateForm = () => {
           required={false}
           onChange={setCertUrl}
         />
-        <input type="file" onChange={handleOnChange}></input>
-
+        <FileUploadButton fileName={fileName} onChange={handleOnChange} />
         <Button
           variant="contained"
           type={'submit'}
           size={'medium'}
           onClick={() => submitForm()}
-          sx={{ height: '50px', marginTop: '5px' }}
+          sx={{ height: '50px', marginTop: '5px', fontWeight: 'bold' }}
         >
           Add
         </Button>
