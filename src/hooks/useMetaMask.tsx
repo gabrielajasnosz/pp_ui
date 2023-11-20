@@ -29,7 +29,8 @@ interface MetaMaskContextData {
   isConnecting: boolean;
   connectMetaMask: () => void;
   clearError: () => void;
-  isUserTrustedIssuer: boolean
+  isUserTrustedIssuer: boolean;
+  isInfoLoaded: boolean;
 }
 
 const disconnectedState: WalletState = {
@@ -48,6 +49,7 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
   const [isConnecting, setIsConnecting] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [isUserTrustedIssuer, setIsUserTrustedIssuer] = useState(false);
+  const [isInfoLoaded, setInfoLoaded] = useState(false);
 
   const clearError = () => setErrorMessage('');
 
@@ -93,6 +95,7 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
    */
   useEffect(() => {
     const getProvider = async () => {
+      setInfoLoaded(false);
       const provider = await detectEthereumProvider({ silent: true });
       setHasProvider(Boolean(provider));
 
@@ -119,6 +122,7 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
       .isTrustedIssuer()
       .then((r) => {
         setIsUserTrustedIssuer(Boolean(r))
+        setInfoLoaded(true);
       })
       .catch((e) => console.log(e));
   }
@@ -148,7 +152,8 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
         isConnecting,
         connectMetaMask,
         clearError,
-        isUserTrustedIssuer
+        isUserTrustedIssuer,
+        isInfoLoaded
       }}
     >
       {children}

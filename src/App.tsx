@@ -9,6 +9,7 @@ import { AddCertPage } from './pages/AddCertPage/AddCertPage';
 import { AddIssuerPage } from './pages/AddIssuerPage/AddIssuerPage'
 import { RemoveIssuerPage } from './pages/RemoveIssuerPage/RemoveIssuerPage'
 import { InvalidateCertPage } from './pages/InvalidateCertPage/InvalidateCertPage'
+import { RoutePermissionChecker } from './components/RoutePermissionChecker/RoutePermissionChecker'
 
 const router = createBrowserRouter([
   {
@@ -21,19 +22,31 @@ const router = createBrowserRouter([
   },
   {
     path: '/add-certificate',
-    element: <AddCertPage />,
+    element:
+      <RoutePermissionChecker>
+        <AddCertPage />
+      </RoutePermissionChecker>,
   },
   {
     path: '/add-issuer',
-    element: <AddIssuerPage />,
+    element:
+      <RoutePermissionChecker>
+        <AddIssuerPage />
+      </RoutePermissionChecker>,
   },
   {
     path: '/remove-issuer',
-    element: <RemoveIssuerPage />,
+    element:
+      <RoutePermissionChecker>
+        <RemoveIssuerPage />
+      </RoutePermissionChecker>,
   },
   {
     path: '/invalidate-certificate',
-    element: <InvalidateCertPage />,
+    element:
+      <RoutePermissionChecker>
+        <InvalidateCertPage />
+      </RoutePermissionChecker>,
   },
 ]);
 

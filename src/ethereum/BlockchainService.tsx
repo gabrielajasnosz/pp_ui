@@ -39,6 +39,7 @@ export class BlockchainService {
 
   public async isTrustedIssuer(): Promise<string> {
     const signer = await this.provider.getSigner()
+    console.log(signer.address)
     return await this.getContract(signer).isTrustedIssuer(signer.address);
   }
 
