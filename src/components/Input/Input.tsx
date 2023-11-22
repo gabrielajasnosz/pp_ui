@@ -3,15 +3,13 @@ import { TextField } from '@mui/material';
 
 type InputProps = {
   label: string;
-  id: string;
   required: boolean;
   onChange: (arg: any) => void;
   type?: 'string' | 'number';
 };
 
-export const Input = ({ label, id, required, onChange, type }: InputProps) => (
+export const Input = ({ label, required, onChange, type }: InputProps) => (
   <TextField
-    id={id}
     label={label}
     variant="outlined"
     required={required}

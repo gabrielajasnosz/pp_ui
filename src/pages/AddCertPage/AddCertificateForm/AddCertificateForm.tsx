@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import './AddCertificateForm.scss';
 import { Input } from '../../../components/Input/Input';
-import { Button } from '@mui/material';
+import { Box, Button, LinearProgress } from '@mui/material';
 import { BlockchainService } from '../../../ethereum/BlockchainService';
 import { useGetFileHash } from '../../../hooks/useFileReader';
 import { FileUploadButton } from '../../../components/FileUploadButton/FileUploadButton';
+import {
+  CustomSnackbar,
+  SnackbarType,
+} from '../../../components/CustomSnackbar/CustomSnackbar';
 
 export const AddCertificateForm = () => {
   const [receiverName, setReceiverName] = useState<string>('');
@@ -12,12 +15,19 @@ export const AddCertificateForm = () => {
   const [certUrl, setCertUrl] = useState<string>('');
   const [certDuration, setCertDuration] = useState<string>('');
   const [fileName, setFileName] = useState<string | undefined>(undefined);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [snackbar, setSnackbar] = useState<SnackbarType>({
+    opened: false,
+    message: '',
+    messageType: 'success',
+  });
 
   const [hash, getHash] = useGetFileHash();
 
   const submitForm = (): void => {
     if (hash) {
       const service = new BlockchainService();
+      setIsLoading(true);
       service
         .addCertificate(
           hash,
@@ -26,9 +36,21 @@ export const AddCertificateForm = () => {
           certDuration,
           certUrl,
         )
-        .then((r) => console.log(r))
+        .then((r) => {
+          setIsLoading(false);
+          setSnackbar({
+            opened: true,
+            message: 'Certificate added successfully',
+            messageType: 'success',
+          });
+        })
         .catch((e) => {
-          console.log(e);
+          setSnackbar({
+            opened: true,
+            message: 'Error while adding certificate.',
+            messageType: 'error',
+          });
+          setIsLoading(false);
         });
     }
   };
@@ -42,45 +64,46 @@ export const AddCertificateForm = () => {
   };
 
   return (
-    <div className={'add-certificate-form'}>
-      <span className={'add-certificate-form__header'}>Add certificate</span>
-      <div className={'add-certificate-form__content'}>
+    <div className={'form-layout'}>
+      <span className={'form-layout__header'}>Add certificate</span>
+      <div className={'form-layout__content'}>
         <Input
           label={'Receiver name'}
-          id={'receiverName'}
           required={true}
           onChange={setReceiverName}
         />
         <Input
           label={'Receiver last name'}
-          id={'receiverLastName'}
           required={true}
           onChange={setReceiverLastName}
         />
         <Input
           label={'Cert duration'}
-          id={'certDuration'}
           type="number"
           required={true}
           onChange={setCertDuration}
         />
-        <Input
-          label={'Cert url'}
-          id={'certUrl'}
-          required={false}
-          onChange={setCertUrl}
-        />
         <FileUploadButton fileName={fileName} onChange={handleOnChange} />
-        <Button
-          variant="contained"
-          type={'submit'}
-          size={'medium'}
-          onClick={() => submitForm()}
-          sx={{ height: '50px', marginTop: '5px', fontWeight: 'bold' }}
-        >
-          Add
-        </Button>
+        {isLoading ? (
+          <Box sx={{ width: '100%' }}>
+            <LinearProgress />
+          </Box>
+        ) : (
+          <Button
+            variant="contained"
+            type="submit"
+            size={'medium'}
+            onClick={() => submitForm()}
+            sx={{ height: '50px', marginTop: '5px', fontWeight: 'bold' }}
+          >
+            Add
+          </Button>
+        )}
       </div>
+      <CustomSnackbar
+        snackbarValues={snackbar}
+        setSnackbarValues={setSnackbar}
+      />
     </div>
   );
 };

@@ -2,7 +2,7 @@ import { ethers } from 'ethers';
 import { CertificateRepository } from './CertificateRepository';
 import { contractABI } from './ContractAbi';
 
-export const CONTRACT_ADDRESS = '0xb94233eae5AE1E93924bB87dAd97489C9B252fF4';
+export const CONTRACT_ADDRESS = '0xDa55F31fBFd645870AEbb2fa6F345c00E8844ee8';
 
 export class BlockchainService {
   private readonly provider: ethers.BrowserProvider;
@@ -38,8 +38,7 @@ export class BlockchainService {
   }
 
   public async isTrustedIssuer(): Promise<string> {
-    const signer = await this.provider.getSigner()
-    console.log(signer.address)
+    const signer = await this.provider.getSigner();
     return await this.getContract(signer).isTrustedIssuer(signer.address);
   }
 

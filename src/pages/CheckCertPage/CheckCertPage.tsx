@@ -1,6 +1,15 @@
 import React, { useState } from 'react';
 import { useGetFileHash } from '../../hooks/useFileReader';
-import { Button } from '@mui/material';
+import {
+  Button,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from '@mui/material';
 import { BlockchainService } from '../../ethereum/BlockchainService';
 import { Utils } from './utils';
 import './CheckCertPage.scss';
@@ -43,11 +52,9 @@ export const CheckCertPage: React.FC = () => {
 
   return (
     <div className={'contract-page'}>
-      <div className={'check-contract-form'}>
-        <span className={'check-contract-form__header'}>
-          Check certificate status
-        </span>
-        <div className={'check-contract-form__content'}>
+      <div className={'form-layout'}>
+        <span className={'form-layout__header'}>Check certificate status</span>
+        <div className={'form-layout__content'}>
           <FileUploadButton fileName={fileName} onChange={handleOnChange} />
           <Button
             variant="contained"
@@ -64,18 +71,55 @@ export const CheckCertPage: React.FC = () => {
       {response && (
         <div className={'check-contract-data'}>
           <div className={'check-contract-data__content'}>
-            {Utils.IsValidCert(response.checksum, response.expireDate) ? (
-              <>
-                <h2>Certificate is Valid</h2>
-                {Object.entries(response).map(([key, value]) => (
-                  <p className="row" key={key}>
-                    <strong>{key.toUpperCase()}</strong>: {value.toString()}
-                  </p>
-                ))}
-              </>
-            ) : (
-              <h2>Certificate is invalid</h2>
-            )}
+            <TableContainer aria-sort={'none'}>
+              <Table>
+                <TableBody>
+                  {Utils.IsValidCert(response.checksum, response.expireDate) ? (
+                    <>
+                      <TableRow>
+                        <TableCell>Certificate status</TableCell>
+                        <TableCell
+                          sx={{ color: '#259a02', fontWeight: 'bold' }}
+                        >
+                          VALID
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>Receiver</TableCell>
+                        <TableCell>
+                          {response.firstName} {response.secondName}
+                        </TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>Issue date</TableCell>
+                        <TableCell>{response.issueDate.toString()}</TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>Expire date</TableCell>
+                        <TableCell>{response.expireDate.toString()}</TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>Checksum</TableCell>
+                        <TableCell>{response.checksum}</TableCell>
+                      </TableRow>
+                      <TableRow>
+                        <TableCell>Issuer</TableCell>
+                        <TableCell>{response.issuer}</TableCell>
+                      </TableRow>
+                    </>
+                  ) : (
+                    <TableRow>
+                      <TableCell sx={{ width: '50px' }}>
+                        Certificate status
+                      </TableCell>
+                      <TableCell sx={{ color: '#d01111', fontWeight: 'bold' }}>
+                        INVALID
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </TableContainer>
           </div>
         </div>
       )}

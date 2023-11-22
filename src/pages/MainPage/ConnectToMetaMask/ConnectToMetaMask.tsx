@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '@mui/material';
+import { Button, CircularProgress } from '@mui/material';
 import { useMetaMask } from '../../../hooks/useMetaMask';
 import './ConnectToMetaMask.scss';
 
@@ -9,7 +9,7 @@ export const ConnectToMetaMask: React.FC = () => {
   return (
     <>
       {isConnecting ? (
-        'Connecting...'
+        <CircularProgress />
       ) : (
         <div className="connect-to-meta-mask">
           <span className="connect-to-meta-mask__header">

@@ -1,11 +1,8 @@
-import React, { useEffect } from 'react'
-import './LinksContainer.scss';
+import React from 'react';
 import {
   Collapse,
   Divider,
-  Link,
   List,
-  ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
@@ -13,22 +10,23 @@ import {
 } from '@mui/material';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import AddIcon from '@mui/icons-material/Add';
-import { ExpandLess, ExpandMore, StarBorder } from '@mui/icons-material';
+import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import SettingsApplicationsIcon from '@mui/icons-material/SettingsApplications';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import { useMetaMask } from '../../../hooks/useMetaMask'
+import { useMetaMask } from '../../../hooks/useMetaMask';
 
 export const LinksContainer: React.FC = () => {
-  const [manageCertificatesOpened, setManageCertificatesOpened] = React.useState(false);
+  const [manageCertificatesOpened, setManageCertificatesOpened] =
+    React.useState(false);
   const [manageIssuersOpened, setManageIssuersOpened] = React.useState(false);
   const { isUserTrustedIssuer } = useMetaMask();
 
   return (
-    <div className={'link-container'}>
-      <span className={'link-container__header'}>Hello Name!</span>
+    <div className={'form-layout'}>
+      <span className={'form-layout__header'}>Hello Name!</span>
       <List
         sx={{ width: '100%', maxWidth: 360 }}
         subheader={
@@ -39,6 +37,7 @@ export const LinksContainer: React.FC = () => {
               color: 'black',
               fontSize: '16px',
               fontWeight: '500',
+              marginTop: '20px',
             }}
           >
             Available actions:
@@ -55,7 +54,9 @@ export const LinksContainer: React.FC = () => {
           <>
             <Divider />
             <ListItemButton
-              onClick={() => setManageCertificatesOpened(!manageCertificatesOpened)}
+              onClick={() =>
+                setManageCertificatesOpened(!manageCertificatesOpened)
+              }
             >
               <ListItemIcon>
                 <SettingsApplicationsIcon color={'success'} />
@@ -63,7 +64,11 @@ export const LinksContainer: React.FC = () => {
               <ListItemText primary="Manage certificates" />
               {manageCertificatesOpened ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
-            <Collapse in={manageCertificatesOpened} timeout="auto" unmountOnExit>
+            <Collapse
+              in={manageCertificatesOpened}
+              timeout="auto"
+              unmountOnExit
+            >
               <List component="div" disablePadding>
                 <ListItemButton
                   sx={{ pl: 4 }}
@@ -75,7 +80,11 @@ export const LinksContainer: React.FC = () => {
                   </ListItemIcon>
                   <ListItemText primary="Add certificate" />
                 </ListItemButton>
-                <ListItemButton sx={{ pl: 4 }} component="a" href="/invalidate-certificate">
+                <ListItemButton
+                  sx={{ pl: 4 }}
+                  component="a"
+                  href="/invalidate-certificate"
+                >
                   <ListItemIcon>
                     <RemoveCircleOutlineIcon />
                   </ListItemIcon>
@@ -101,7 +110,11 @@ export const LinksContainer: React.FC = () => {
                   </ListItemIcon>
                   <ListItemText primary="Add issuer" />
                 </ListItemButton>
-                <ListItemButton sx={{ pl: 4 }} component="a" href="/remove-issuer">
+                <ListItemButton
+                  sx={{ pl: 4 }}
+                  component="a"
+                  href="/remove-issuer"
+                >
                   <ListItemIcon>
                     <PersonRemoveIcon />
                   </ListItemIcon>

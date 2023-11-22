@@ -2,14 +2,13 @@ import React from 'react';
 import './App.css';
 import { MainPage } from './pages/MainPage/MainPage';
 import { MetaMaskContextProvider } from './hooks/useMetaMask';
-
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { CheckCertPage } from './pages/CheckCertPage/CheckCertPage';
 import { AddCertPage } from './pages/AddCertPage/AddCertPage';
-import { AddIssuerPage } from './pages/AddIssuerPage/AddIssuerPage'
-import { RemoveIssuerPage } from './pages/RemoveIssuerPage/RemoveIssuerPage'
-import { InvalidateCertPage } from './pages/InvalidateCertPage/InvalidateCertPage'
-import { RoutePermissionChecker } from './components/RoutePermissionChecker/RoutePermissionChecker'
+import { AddIssuerPage } from './pages/AddIssuerPage/AddIssuerPage';
+import { RemoveIssuerPage } from './pages/RemoveIssuerPage/RemoveIssuerPage';
+import { InvalidateCertPage } from './pages/InvalidateCertPage/InvalidateCertPage';
+import { RoutePermissionChecker } from './components/RoutePermissionChecker/RoutePermissionChecker';
 
 const router = createBrowserRouter([
   {
@@ -22,31 +21,35 @@ const router = createBrowserRouter([
   },
   {
     path: '/add-certificate',
-    element:
+    element: (
       <RoutePermissionChecker>
         <AddCertPage />
-      </RoutePermissionChecker>,
+      </RoutePermissionChecker>
+    ),
   },
   {
     path: '/add-issuer',
-    element:
+    element: (
       <RoutePermissionChecker>
         <AddIssuerPage />
-      </RoutePermissionChecker>,
+      </RoutePermissionChecker>
+    ),
   },
   {
     path: '/remove-issuer',
-    element:
+    element: (
       <RoutePermissionChecker>
         <RemoveIssuerPage />
-      </RoutePermissionChecker>,
+      </RoutePermissionChecker>
+    ),
   },
   {
     path: '/invalidate-certificate',
-    element:
+    element: (
       <RoutePermissionChecker>
         <InvalidateCertPage />
-      </RoutePermissionChecker>,
+      </RoutePermissionChecker>
+    ),
   },
 ]);
 

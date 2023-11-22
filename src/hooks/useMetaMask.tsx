@@ -7,7 +7,7 @@ import {
   useCallback,
 } from 'react';
 import detectEthereumProvider from '@metamask/detect-provider';
-import { BlockchainService } from '../ethereum/BlockchainService'
+import { BlockchainService } from '../ethereum/BlockchainService';
 
 declare global {
   interface Window {
@@ -87,6 +87,11 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
     [_updateWallet],
   );
 
+  useEffect(() => {
+    if (wallet.accounts.length > 0) {
+      getTrustedIssuerInfo();
+    }
+  }, [wallet]);
   /**
    * This logic checks if MetaMask is installed. If it is, some event handlers are set up
    * to update the wallet state when MetaMask changes. The function returned by useEffect
@@ -100,10 +105,9 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
       setHasProvider(Boolean(provider));
 
       if (provider) {
-        updateWalletAndAccounts();
+        await updateWalletAndAccounts();
         window.ethereum.on('accountsChanged', updateWallet);
         window.ethereum.on('chainChanged', updateWalletAndAccounts);
-        getTrustedIssuerInfo();
       }
     };
 
@@ -115,17 +119,16 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
     };
   }, [updateWallet, updateWalletAndAccounts]);
 
-
   const getTrustedIssuerInfo = () => {
     const service = new BlockchainService();
     service
       .isTrustedIssuer()
       .then((r) => {
-        setIsUserTrustedIssuer(Boolean(r))
+        setIsUserTrustedIssuer(Boolean(r));
         setInfoLoaded(true);
       })
       .catch((e) => console.log(e));
-  }
+  };
 
   const connectMetaMask = async () => {
     setIsConnecting(true);
@@ -153,7 +156,7 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
         connectMetaMask,
         clearError,
         isUserTrustedIssuer,
-        isInfoLoaded
+        isInfoLoaded,
       }}
     >
       {children}

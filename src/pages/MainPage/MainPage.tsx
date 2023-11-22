@@ -16,7 +16,7 @@ export const MainPage = () => {
   );
 
   return (
-    <div className={'main-page'}>
+    <div className={'page-layout'}>
       {isConnected ? <LinksContainer /> : <ConnectToMetaMask />}
     </div>
   );
