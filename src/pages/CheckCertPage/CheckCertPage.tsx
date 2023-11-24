@@ -2,12 +2,10 @@ import React, { useState } from 'react';
 import { useGetFileHash } from '../../hooks/useFileReader';
 import {
   Button,
-  Paper,
   Table,
   TableBody,
   TableCell,
   TableContainer,
-  TableHead,
   TableRow,
 } from '@mui/material';
 import { BlockchainService } from '../../ethereum/BlockchainService';
@@ -58,10 +56,10 @@ export const CheckCertPage: React.FC = () => {
           <FileUploadButton fileName={fileName} onChange={handleOnChange} />
           <Button
             variant="contained"
-            type={'submit'}
-            size={'medium'}
+            type="submit"
+            size="medium"
             onClick={() => submit()}
-            sx={{ height: '50px', marginTop: '5px', fontWeight: 'bold' }}
+            className="confirm-button"
           >
             Check
           </Button>

@@ -58,7 +58,7 @@ export const RemoveIssuerPage = () => {
               type={'submit'}
               size={'medium'}
               onClick={submitForm}
-              sx={{ height: '50px', marginTop: '5px', fontWeight: 'bold' }}
+              className="confirm-button"
             >
               Remove issuer
             </Button>

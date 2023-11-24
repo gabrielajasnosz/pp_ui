@@ -92,9 +92,9 @@ export const AddCertificateForm = () => {
           <Button
             variant="contained"
             type="submit"
-            size={'medium'}
+            size="medium"
             onClick={() => submitForm()}
-            sx={{ height: '50px', marginTop: '5px', fontWeight: 'bold' }}
+            className="confirm-button"
           >
             Add
           </Button>
