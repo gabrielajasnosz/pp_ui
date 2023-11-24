@@ -4,6 +4,8 @@ import { Input } from '../../../components/Input/Input'
 import { Button } from '@mui/material'
 import { BlockchainService } from '../../../ethereum/BlockchainService'
 import { useGetFileHash } from '../../../hooks/useFileReader'
+import {MailSender} from "../../../mail/MailSender";
+import {FileUploader} from "../../../files/FileUploader";
 
 export const AddCertificateForm = () => {
   const [receiverName, setReceiverName] = useState<string>('')
@@ -12,8 +14,13 @@ export const AddCertificateForm = () => {
   const [certDuration, setCertDuration] = useState<string>('')
 
   const [hash, getHash] = useGetFileHash()
+  const [file, setFile] = useState<File | null>(null);
 
   const submitForm = (): void => {
+    if (!file) {
+      console.error('No file selected');
+      return;
+    }
     if (hash) {
       const service = new BlockchainService()
       service
@@ -24,7 +31,19 @@ export const AddCertificateForm = () => {
           certDuration,
           certUrl
         )
-        .then((r) => console.log(r))
+        .then((r) => {
+          console.log(r);
+          const fileUploader = new FileUploader()
+          fileUploader.uploadCertificate(file)
+              .then(res => {
+                console.log(res);
+                const mailSender = new MailSender();
+                mailSender.sendMail(receiverName, receiverLastName, res.link) // LAST NAME WORKS AS EMAIL RIGHT NOW (NO VALIDATION)
+                    .then(r => console.log(r))
+                    .catch((e) => {console.log(e)});
+              })
+              .catch((e) => {console.log(e)});
+        })
         .catch((e) => {
           console.log(e)
         })
@@ -34,7 +53,8 @@ export const AddCertificateForm = () => {
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (file) {
-      getHash(file)
+      setFile(file);
+      getHash(file);
     }
   }
 
