@@ -1,16 +1,16 @@
-import { CertResponse } from './CheckCertPage'
+import { CertResponse } from './CheckCertPage';
 
 export namespace Utils {
   export const toObject = (r: any) => {
     return JSON.parse(
       JSON.stringify(r, (_, value) =>
-        typeof value === 'bigint' ? value.toString() : value
-      )
-    )
-  }
+        typeof value === 'bigint' ? value.toString() : value,
+      ),
+    );
+  };
 
   export const convertToResponse = <T extends string, R extends Array<T>>(
-    obj: R
+    obj: R,
   ): CertResponse => {
     return {
       checksum: obj[0],
@@ -24,13 +24,13 @@ export namespace Utils {
       certUrl: obj[4],
       firstName: obj[5][0],
       secondName: obj[5][1],
-    }
-  }
+    };
+  };
 
   export const IsValidCert = (checksum: string, expireDate: string | Date) => {
-    const isExpired = expireDate < new Date()
-    const exist = checksum.length > 0
+    const isExpired = expireDate < new Date();
+    const exist = checksum.length > 0;
 
-    return exist && !isExpired
-  }
+    return exist && !isExpired;
+  };
 }

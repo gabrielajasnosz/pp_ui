@@ -1,84 +1,109 @@
-import React, { useState } from 'react'
-import './AddCertificateForm.scss'
-import { Input } from '../../../components/Input/Input'
-import { Button } from '@mui/material'
-import { BlockchainService } from '../../../ethereum/BlockchainService'
-import { useGetFileHash } from '../../../hooks/useFileReader'
+import React, { useState } from 'react';
+import { Input } from '../../../components/Input/Input';
+import { Box, Button, LinearProgress } from '@mui/material';
+import { BlockchainService } from '../../../ethereum/BlockchainService';
+import { useGetFileHash } from '../../../hooks/useFileReader';
+import { FileUploadButton } from '../../../components/FileUploadButton/FileUploadButton';
+import {
+  CustomSnackbar,
+  SnackbarType,
+} from '../../../components/CustomSnackbar/CustomSnackbar';
 
 export const AddCertificateForm = () => {
-  const [receiverName, setReceiverName] = useState<string>('')
-  const [receiverLastName, setReceiverLastName] = useState<string>('')
-  const [certUrl, setCertUrl] = useState<string>('')
-  const [certDuration, setCertDuration] = useState<string>('')
+  const [receiverName, setReceiverName] = useState<string>('');
+  const [receiverLastName, setReceiverLastName] = useState<string>('');
+  const [certUrl, setCertUrl] = useState<string>('');
+  const [certDuration, setCertDuration] = useState<string>('');
+  const [fileName, setFileName] = useState<string | undefined>(undefined);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [snackbar, setSnackbar] = useState<SnackbarType>({
+    opened: false,
+    message: '',
+    messageType: 'success',
+  });
 
-  const [hash, getHash] = useGetFileHash()
+  const [hash, getHash] = useGetFileHash();
 
   const submitForm = (): void => {
     if (hash) {
-      const service = new BlockchainService()
+      const service = new BlockchainService();
+      setIsLoading(true);
       service
         .addCertificate(
           hash,
           receiverName,
           receiverLastName,
           certDuration,
-          certUrl
+          certUrl,
         )
-        .then((r) => console.log(r))
-        .catch((e) => {
-          console.log(e)
+        .then((r) => {
+          setIsLoading(false);
+          setSnackbar({
+            opened: true,
+            message: 'Certificate added successfully',
+            messageType: 'success',
+          });
         })
+        .catch((e) => {
+          setSnackbar({
+            opened: true,
+            message: 'Error while adding certificate.',
+            messageType: 'error',
+          });
+          setIsLoading(false);
+        });
     }
-  }
+  };
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
+    const file = e.target.files?.[0];
     if (file) {
-      getHash(file)
+      setFileName(file.name);
+      getHash(file);
     }
-  }
+  };
 
   return (
-    <div className={'add-certificate-form'}>
-      <span className={'add-certificate-form__header'}>Add certificate</span>
-      <div className={'add-certificate-form__content'}>
+    <div className={'form-layout'}>
+      <span className={'form-layout__header'}>Add certificate</span>
+      <div className={'form-layout__content'}>
         <Input
           label={'Receiver name'}
-          id={'receiverName'}
           required={true}
           onChange={setReceiverName}
         />
         <Input
           label={'Receiver last name'}
-          id={'receiverLastName'}
           required={true}
           onChange={setReceiverLastName}
         />
         <Input
           label={'Cert duration'}
-          id={'certDuration'}
           type="number"
           required={true}
           onChange={setCertDuration}
         />
-        <Input
-          label={'Cert url'}
-          id={'certUrl'}
-          required={false}
-          onChange={setCertUrl}
-        />
-        <input type="file" onChange={handleOnChange}></input>
-
-        <Button
-          variant="contained"
-          type={'submit'}
-          size={'medium'}
-          onClick={() => submitForm()}
-          sx={{ height: '50px', marginTop: '5px' }}
-        >
-          Add
-        </Button>
+        <FileUploadButton fileName={fileName} onChange={handleOnChange} />
+        {isLoading ? (
+          <Box sx={{ width: '100%' }}>
+            <LinearProgress />
+          </Box>
+        ) : (
+          <Button
+            variant="contained"
+            type="submit"
+            size="medium"
+            onClick={() => submitForm()}
+            className="confirm-button"
+          >
+            Add
+          </Button>
+        )}
       </div>
+      <CustomSnackbar
+        snackbarValues={snackbar}
+        setSnackbarValues={setSnackbar}
+      />
     </div>
-  )
-}
+  );
+};
