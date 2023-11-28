@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import AddIcon from '@mui/icons-material/Add';
+import ListIcon from '@mui/icons-material/List';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import SettingsApplicationsIcon from '@mui/icons-material/SettingsApplications';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
@@ -79,6 +80,16 @@ export const LinksContainer: React.FC = () => {
                     <AddIcon />
                   </ListItemIcon>
                   <ListItemText primary="Add certificate" />
+                </ListItemButton>
+                <ListItemButton
+                  sx={{ pl: 4 }}
+                  component="a"
+                  href="/certificate-list"
+                >
+                  <ListItemIcon>
+                    <ListIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="List of issued certificates" />
                 </ListItemButton>
                 <ListItemButton
                   sx={{ pl: 4 }}

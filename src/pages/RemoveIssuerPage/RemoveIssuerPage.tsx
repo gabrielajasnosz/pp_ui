@@ -31,7 +31,7 @@ export const RemoveIssuerPage = () => {
       .catch((e) => {
         setSnackbar({
           opened: true,
-          message: 'Error while adding trusted issuer.',
+          message: 'Error while removing trusted issuer.',
           messageType: 'error',
         });
         setIsLoading(false);

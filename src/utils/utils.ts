@@ -1,4 +1,12 @@
-import { CertResponse } from './CheckCertPage';
+export interface CertResponse {
+  checksum: string;
+  issueDate: Date | string;
+  expireDate: Date | string;
+  issuer: string;
+  certUrl: string;
+  firstName: string;
+  secondName: string;
+}
 
 export namespace Utils {
   export const toObject = (r: any) => {
@@ -9,8 +17,8 @@ export namespace Utils {
     );
   };
 
-  export const convertToResponse = <T extends string, R extends Array<T>>(
-    obj: R,
+  export const convertRawToCertResponse = <T extends string>(
+    obj: T,
   ): CertResponse => {
     return {
       checksum: obj[0],
