@@ -9,19 +9,9 @@ import {
   TableRow,
 } from '@mui/material';
 import { BlockchainService } from '../../ethereum/BlockchainService';
-import { Utils } from './utils';
 import './CheckCertPage.scss';
 import { FileUploadButton } from '../../components/FileUploadButton/FileUploadButton';
-
-export interface CertResponse {
-  checksum: string;
-  issueDate: Date | string;
-  expireDate: Date | string;
-  issuer: string;
-  certUrl: string;
-  firstName: string;
-  secondName: string;
-}
+import { Utils, CertResponse } from '../../utils';
 
 export const CheckCertPage: React.FC = () => {
   const [hash, getHash] = useGetFileHash();
@@ -42,7 +32,7 @@ export const CheckCertPage: React.FC = () => {
       service
         .getCertificate(hash)
         .then((r) => {
-          setResponse(Utils.convertToResponse(Utils.toObject(r)));
+          setResponse(Utils.convertRawToCertResponse(Utils.toObject(r)));
         })
         .catch((e) => console.log(e));
     }
@@ -58,6 +48,7 @@ export const CheckCertPage: React.FC = () => {
             variant="contained"
             type="submit"
             size="medium"
+            disabled={!hash}
             onClick={() => submit()}
             className="confirm-button"
           >
