@@ -83,7 +83,7 @@ export const AddCertificateForm = () => {
           required={true}
           onChange={setCertDuration}
         />
-        <FileUploadButton fileName={fileName} onChange={handleOnChange} />
+        <FileUploadButton fileName={fileName} onChange={handleOnChange} label={'Upload pdf file'}/>
         {isLoading ? (
           <Box sx={{ width: '100%' }}>
             <LinearProgress />

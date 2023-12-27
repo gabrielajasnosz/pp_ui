@@ -5,16 +5,17 @@ import React from 'react';
 export type Props = {
   fileName: string | undefined;
   onChange: (e: any) => void;
+  label: string
 };
 
-export const FileUploadButton = ({ fileName, onChange }: Props) => (
+export const FileUploadButton = ({ fileName, onChange, label }: Props) => (
   <Button
     variant={fileName ? 'text' : 'outlined'}
     component="label"
     startIcon={<CloudUploadIcon />}
     sx={{ fontWeight: 'bold' }}
   >
-    {!fileName ? 'Upload pdf file' : fileName}
+    {!fileName ? label : fileName}
     <input type="file" style={{ display: 'none' }} onChange={onChange} />
   </Button>
 );

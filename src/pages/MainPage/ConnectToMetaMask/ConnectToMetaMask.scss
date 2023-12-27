@@ -2,6 +2,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+  bottom: 100px;
+  left: 300px;
 
   &__header {
     justify-self: center;
