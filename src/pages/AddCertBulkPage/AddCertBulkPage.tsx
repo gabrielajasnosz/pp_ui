@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import { CertResponse } from '../../utils'
+import { CertBulkDto, CertResponse } from '../../utils'
 import { FileUploadButton } from '../../components/FileUploadButton/FileUploadButton'
 import { Button } from '@mui/material'
-import { addCerificates } from '../../services/CertificateService'
+import { addCertificates } from '../../services/CertificateService'
+import { BlockchainService } from '../../ethereum/BlockchainService'
 
 export const AddCertBulkPage = () => {
   const [file, setFile] = useState(null);
@@ -22,9 +23,34 @@ const submit = () => {
   // @ts-ignore
   formData.append("file", file);
   formData.append("issuer", "PK")
-    addCerificates(formData)
+    addCertificates(formData)
       .then((r) => {
-        console.log(r);
+        const obj: CertBulkDto[] = r;
+        console.log("response");
+        console.log(obj);
+        
+        const certData: string[][] = obj.map(cert => [
+          cert.checksum,
+          cert.recipientName,
+          cert.recipientSurname,
+          cert.daysValid.toString(),
+          "URL",
+          "PK"
+        ]);
+        
+        console.log("CertData");
+        console.log(certData);
+
+        const service = new BlockchainService();
+        service
+          .bulkUploadCertificates(certData)
+          .then((r) => {
+            console.log("SUCCESS");
+          })
+          .catch((e) => {
+            console.log("FAILURE");
+          });
+
       })
       .catch((e) => console.log(e));
 };

@@ -1,8 +1,9 @@
 import { ethers } from 'ethers';
 import { CertificateRepository } from './CertificateRepository';
 import { contractABI } from './ContractAbi';
+import { CertBulkDto } from '../utils';
 
-export const CONTRACT_ADDRESS = '0x1dFEc67990A80bAa971559d4EF6dA559f5c14EBD';
+export const CONTRACT_ADDRESS = '0x9A369CA70727a28dc1228f5a2308f3B06898aD71';
 
 export class BlockchainService {
   private readonly provider: ethers.BrowserProvider;
@@ -103,5 +104,18 @@ export class BlockchainService {
       contractABI,
       this.provider,
     ).connect(signer) as CertificateRepository;
+  }
+
+    /**
+        Function used to add new certificates in bulk. Only trusted issuers can perform this action.
+
+        returns: Promise object of string type
+    */
+  public async bulkUploadCertificates(
+    certData: string[][]
+  ): Promise<string> {
+    const signer = await this.provider.getSigner();
+
+    return await this.getContract(signer).bulkUploadCertificates(certData);
   }
 }
