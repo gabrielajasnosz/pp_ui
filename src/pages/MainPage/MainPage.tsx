@@ -1,8 +1,8 @@
 import React from 'react';
 import './MainPage.scss';
-import { ConnectToMetaMask } from './ConnectToMetaMask/ConnectToMetaMask';
 import { useMetaMask } from '../../hooks/useMetaMask';
 import { LinksContainer } from './LinksContainer/LinksContainer';
+import { ConnectToMetaMask } from './ConnectToMetaMask/ConnectToMetaMask';
 
 export const MainPage = () => {
   const {
@@ -17,7 +17,8 @@ export const MainPage = () => {
 
   return (
     <div className={'page-layout'}>
-      {isConnected ? <LinksContainer /> : <ConnectToMetaMask />}
+      {!isConnected && <ConnectToMetaMask />}
+      <LinksContainer />
     </div>
   );
 };

@@ -10,6 +10,7 @@ export interface CertificateRepository extends BaseContract {
     _days_valid: number,
     _cert_url: string,
   ): Promise<any>;
+  bulkUploadCertificates(_bulkData: string[][]): Promise<any>;
   removeTrustedIssuer(_issuer: string): Promise<any>;
   isTrustedIssuer(_issuer: string): Promise<any>;
   getCertificatesIssuedBy(_issuer: string): Promise<any>;

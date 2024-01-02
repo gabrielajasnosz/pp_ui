@@ -42,3 +42,12 @@ export namespace Utils {
     return exist && !isExpired;
   };
 }
+
+export interface CertBulkDto {
+  checksum: string,
+  recipientName: string,
+  recipientSurname: string,
+  daysValid: string,
+  certUrl: string,
+  owner: string
+}

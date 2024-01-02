@@ -10,6 +10,7 @@ import { RemoveIssuerPage } from './pages/RemoveIssuerPage/RemoveIssuerPage';
 import { InvalidateCertPage } from './pages/InvalidateCertPage/InvalidateCertPage';
 import { RoutePermissionChecker } from './components/RoutePermissionChecker/RoutePermissionChecker';
 import { IssuedCertsPage } from './pages/IssuedCertsPage/IssuedCertsPage';
+import { AddCertBulkPage } from './pages/AddCertBulkPage/AddCertBulkPage'
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,14 @@ const router = createBrowserRouter([
         <AddCertPage />
       </RoutePermissionChecker>
     ),
+  },
+  {
+    path: '/add-certificate-bulk',
+    element: (
+      <RoutePermissionChecker>
+        <AddCertBulkPage />
+      </RoutePermissionChecker>
+    )
   },
   {
     path: '/add-issuer',
@@ -59,7 +68,7 @@ const router = createBrowserRouter([
         <IssuedCertsPage />
       </RoutePermissionChecker>
     ),
-  }, 
+  },
 ]);
 
 function App() {
