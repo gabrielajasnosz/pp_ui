@@ -30,6 +30,8 @@ interface MetaMaskContextData {
   connectMetaMask: () => void;
   clearError: () => void;
   isUserTrustedIssuer: boolean;
+  isUserAdmin: boolean;
+  isUserContractOwner: boolean;
   isInfoLoaded: boolean;
 }
 
@@ -49,6 +51,8 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
   const [isConnecting, setIsConnecting] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [isUserTrustedIssuer, setIsUserTrustedIssuer] = useState(false);
+  const [isUserAdmin, setIsUserAdmin] = useState(false);
+  const [isUserContractOwner, setIsUserContractOwner] = useState(false);
   const [isInfoLoaded, setInfoLoaded] = useState(false);
 
   const clearError = () => setErrorMessage('');
@@ -89,7 +93,7 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
 
   useEffect(() => {
     if (wallet.accounts.length > 0) {
-      getTrustedIssuerInfo();
+      getUserInfo();
     }
   }, [wallet]);
   /**
@@ -119,15 +123,35 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
     };
   }, [updateWallet, updateWalletAndAccounts]);
 
-  const getTrustedIssuerInfo = () => {
+  const getUserInfo = () => {
     const service = new BlockchainService();
-    service
+
+    const isTrustedIssuer = service
       .isTrustedIssuer()
       .then((r) => {
         setIsUserTrustedIssuer(Boolean(r));
-        setInfoLoaded(true);
       })
       .catch((e) => console.log(e));
+
+    const isAdmin = service
+      .isAdmin()
+      .then((r) => {
+        setIsUserAdmin(Boolean(r));
+      })
+      .catch((e) => console.log(e));
+
+    const isContractOwner = service
+      .isContractOwner()
+      .then((r) => {
+        setIsUserContractOwner(Boolean(r));
+      })
+      .catch((e) => console.log(e));
+
+    Promise.allSettled([isTrustedIssuer, isAdmin, isContractOwner]).finally(
+      () => {
+        setInfoLoaded(true);
+      },
+    );
   };
 
   const connectMetaMask = async () => {
@@ -156,6 +180,8 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
         connectMetaMask,
         clearError,
         isUserTrustedIssuer,
+        isUserAdmin,
+        isUserContractOwner,
         isInfoLoaded,
       }}
     >

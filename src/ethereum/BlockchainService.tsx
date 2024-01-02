@@ -49,6 +49,26 @@ export class BlockchainService {
     return await this.getContract(signer).isTrustedIssuer(signer.address);
   }
 
+  public async addAdmin(adminAddress: string): Promise<string> {
+    const signer = await this.provider.getSigner();
+    return await this.getContract(signer).addAdmin(adminAddress);
+  }
+
+  public async removeAdmin(adminAddress: string): Promise<string> {
+    const signer = await this.provider.getSigner();
+    return await this.getContract(signer).removeAdmin(adminAddress);
+  }
+
+  public async isAdmin(): Promise<string> {
+    const signer = await this.provider.getSigner();
+    return "true"
+  }
+
+  public async isContractOwner(): Promise<string> {
+    const signer = await this.provider.getSigner();
+    return "true"
+  }
+
   /**
         Function used to add new certificate. Only trusted issuers can perform this action.
 
