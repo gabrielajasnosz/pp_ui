@@ -116,25 +116,49 @@ export const contractABI = [
 	{
 		"inputs": [
 			{
-				"internalType": "string",
-				"name": "_checksum",
-				"type": "string"
-			}
-		],
-		"name": "invalidate",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
 				"internalType": "address",
 				"name": "_admin",
 				"type": "address"
 			}
 		],
 		"name": "removeAdmin",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "string",
+				"name": "checksum",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "reason",
+				"type": "string"
+			}
+		],
+		"name": "FailedAddingCertificate",
+		"type": "event"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_checksum",
+				"type": "string"
+			}
+		],
+		"name": "invalidate",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -153,9 +177,35 @@ export const contractABI = [
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"stateMutability": "nonpayable",
-		"type": "constructor"
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "string",
+				"name": "checksum",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "recipient_name",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "recipient_surname",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "issuer_identification_name",
+				"type": "string"
+			}
+		],
+		"name": "SuccessfullyAddedCertificate",
+		"type": "event"
 	},
 	{
 		"inputs": [
@@ -226,7 +276,7 @@ export const contractABI = [
 					},
 					{
 						"internalType": "string",
-						"name": "issuerIdentificationName",
+						"name": "issuer_identification_name",
 						"type": "string"
 					}
 				],
@@ -294,7 +344,7 @@ export const contractABI = [
 					},
 					{
 						"internalType": "string",
-						"name": "issuerIdentificationName",
+						"name": "issuer_identification_name",
 						"type": "string"
 					}
 				],
@@ -362,7 +412,7 @@ export const contractABI = [
 					},
 					{
 						"internalType": "string",
-						"name": "issuerIdentificationName",
+						"name": "issuer_identification_name",
 						"type": "string"
 					}
 				],

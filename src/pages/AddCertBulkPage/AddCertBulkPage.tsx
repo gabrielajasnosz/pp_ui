@@ -53,6 +53,7 @@ export const AddCertBulkPage = () => {
                 message: 'Certificates added successfully',
                 messageType: 'success',
               });
+              //console.log(r.events) when typed should return event when one or more record fail to load
             })
             .catch((e) => {
               setIsLoading(false);
@@ -61,6 +62,7 @@ export const AddCertBulkPage = () => {
                 message: 'Error while adding certificates.',
                 messageType: 'error',
               });
+              console.log(e);
             });
 
         })
