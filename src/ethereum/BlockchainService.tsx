@@ -1,7 +1,6 @@
 import { ethers } from 'ethers';
 import { CertificateRepository } from './CertificateRepository';
 import { contractABI } from './ContractAbi';
-import { CertBulkDto } from '../utils';
 
 export const CONTRACT_ADDRESS = '0x9A369CA70727a28dc1228f5a2308f3B06898aD71';
 

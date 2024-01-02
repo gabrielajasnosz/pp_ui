@@ -47,7 +47,7 @@ export interface CertBulkDto {
   checksum: string,
   recipientName: string,
   recipientSurname: string,
-  daysValid: number,
+  daysValid: string,
   certUrl: string,
   owner: string
 }
