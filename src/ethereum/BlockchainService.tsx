@@ -61,12 +61,12 @@ export class BlockchainService {
 
   public async isAdmin(): Promise<string> {
     const signer = await this.provider.getSigner();
-    return "true"
+    return await this.getContract(signer).isAdmin(signer.address);
   }
 
   public async isContractOwner(): Promise<string> {
     const signer = await this.provider.getSigner();
-    return "true"
+    return await this.getContract(signer).isContractOwner(signer.address);
   }
 
   /**
