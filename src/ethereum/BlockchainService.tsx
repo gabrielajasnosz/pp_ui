@@ -55,6 +55,7 @@ export class BlockchainService {
         checkSum: string - generated checkSum value for certificate file that will be deployed.
         recipientName: string - name of certificate owner.
         recipientSurname: string - surname of certificate owner.
+        recipientEmail: string - email of certificate owner.
 
         returns: Promise object of string type
     */
@@ -62,16 +63,20 @@ export class BlockchainService {
     checkSum: string,
     recipientName: string,
     recipientSurname: string,
+    recipientEmail: string,
     daysValid: string,
-    certUrl: string,
+    certName: string,
+    issuer: string
   ): Promise<string> {
     const signer = await this.provider.getSigner();
     return await this.getContract(signer).addCertificate(
       checkSum,
       recipientName,
       recipientSurname,
+      recipientEmail,
       parseInt(daysValid),
-      certUrl,
+      certName,
+      issuer
     );
   }
 

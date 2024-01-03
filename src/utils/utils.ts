@@ -3,9 +3,10 @@ export interface CertResponse {
   issueDate: Date | string;
   expireDate: Date | string;
   issuer: string;
-  certUrl: string;
+  certName: string;
   firstName: string;
   secondName: string;
+  email: string;
 }
 
 export namespace Utils {
@@ -29,9 +30,10 @@ export namespace Utils {
         ? obj[1]
         : new Date(parseInt(obj[2]) * 1000),
       issuer: obj[3],
-      certUrl: obj[4],
+      certName: obj[4],
       firstName: obj[5][0],
       secondName: obj[5][1],
+      email: obj[5][2],
     };
   };
 
@@ -47,7 +49,8 @@ export interface CertBulkDto {
   checksum: string,
   recipientName: string,
   recipientSurname: string,
+  recipientEmail: string,
   daysValid: string,
-  certUrl: string,
-  owner: string
+  certName: string,
+  issuer: string
 }
