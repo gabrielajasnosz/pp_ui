@@ -43,7 +43,11 @@ export const CheckCertPage: React.FC = () => {
       <div className={'form-layout'}>
         <span className={'form-layout__header'}>Check certificate status</span>
         <div className={'form-layout__content'}>
-          <FileUploadButton fileName={fileName} onChange={handleOnChange} label={'Upload pdf file'} />
+          <FileUploadButton
+            fileName={fileName}
+            onChange={handleOnChange}
+            label={'Upload pdf file'}
+          />
           <Button
             variant="contained"
             type="submit"
@@ -76,7 +80,8 @@ export const CheckCertPage: React.FC = () => {
                       <TableRow>
                         <TableCell>Receiver</TableCell>
                         <TableCell>
-                          {response.firstName} {response.secondName} {response.email}
+                          {response.firstName} {response.secondName}{' '}
+                          {response.email}
                         </TableCell>
                       </TableRow>
                       <TableRow>

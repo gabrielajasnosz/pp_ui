@@ -11,7 +11,9 @@ import {
 
 export const AddCertificateForm = () => {
   const [receiverName, setReceiverName] = useState<string | undefined>('');
-  const [receiverLastName, setReceiverLastName] = useState<string | undefined>();
+  const [receiverLastName, setReceiverLastName] = useState<
+    string | undefined
+  >();
   const [receiverEmail, setReceiverEmail] = useState<string | undefined>();
   const [certName, setCertName] = useState<string | undefined>();
   const [issuerName, setIssuerName] = useState<string | undefined>();
@@ -38,7 +40,7 @@ export const AddCertificateForm = () => {
           receiverEmail!,
           certDuration!,
           certName!,
-          issuerName!
+          issuerName!,
         )
         .then((r) => {
           setIsLoading(false);
@@ -97,12 +99,12 @@ export const AddCertificateForm = () => {
           required={true}
           onChange={setCertName}
         />
-        <Input
-          label={'Issuer name'}
-          required={true}
-          onChange={setIssuerName}
+        <Input label={'Issuer name'} required={true} onChange={setIssuerName} />
+        <FileUploadButton
+          fileName={fileName}
+          onChange={handleOnChange}
+          label={'Upload pdf file'}
         />
-        <FileUploadButton fileName={fileName} onChange={handleOnChange} label={'Upload pdf file'}/>
         {isLoading ? (
           <Box sx={{ width: '100%' }}>
             <LinearProgress />
@@ -112,7 +114,15 @@ export const AddCertificateForm = () => {
             variant="contained"
             type="submit"
             size="medium"
-            disabled={!receiverName || !receiverLastName || !receiverEmail || !certName || !certDuration || !issuerName || !fileName}
+            disabled={
+              !receiverName ||
+              !receiverLastName ||
+              !receiverEmail ||
+              !certName ||
+              !certDuration ||
+              !issuerName ||
+              !fileName
+            }
             onClick={() => submitForm()}
             className="confirm-button"
           >

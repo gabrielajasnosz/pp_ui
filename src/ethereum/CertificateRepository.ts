@@ -10,7 +10,7 @@ export interface CertificateRepository extends BaseContract {
     _recipient_email: string,
     _days_valid: number,
     _cert_name: string,
-    _issuer_identification_name: string
+    _issuer_identification_name: string,
   ): Promise<any>;
   bulkUploadCertificates(_bulkData: string[][]): Promise<any>;
   removeTrustedIssuer(_issuer: string): Promise<any>;
