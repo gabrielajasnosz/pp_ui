@@ -59,6 +59,7 @@ export const AddAdminPage = () => {
               type={'submit'}
               size={'medium'}
               onClick={submitForm}
+              disabled={!newAdminAddress}
               className="confirm-button"
             >
               Add admin

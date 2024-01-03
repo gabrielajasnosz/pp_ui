@@ -5,6 +5,7 @@ import { Box, Button, LinearProgress } from '@mui/material'
 import { addCertificates } from '../../services/CertificateService'
 import { BlockchainService } from '../../ethereum/BlockchainService'
 import { CustomSnackbar, SnackbarType } from '../../components/CustomSnackbar/CustomSnackbar'
+import { Input } from '../../components/Input/Input'
 
 export const AddCertBulkPage = () => {
   const [file, setFile] = useState(null);
@@ -15,6 +16,7 @@ export const AddCertBulkPage = () => {
     message: '',
     messageType: 'success',
   });
+  const [issuerName, setIssuerName] = useState<string | undefined>(undefined);
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -30,7 +32,7 @@ export const AddCertBulkPage = () => {
     setIsLoading(true);
     // @ts-ignore
     formData.append("file", file);
-    formData.append("issuer", "PK")
+    formData.append("issuer", issuerName!)
       addCertificates(formData)
         .then((r) => {
           const service = new BlockchainService();
@@ -75,6 +77,11 @@ return (
     <div className={'form-layout'}>
       <span className={'form-layout__header'}>Add certificates from CSV</span>
       <div className={'form-layout__content'}>
+        <Input
+          label={'Issuer name'}
+          required={true}
+          onChange={setIssuerName}
+        />
         <FileUploadButton fileName={fileName} onChange={handleOnChange} label={'Upload csv file'} />
         {isLoading ? (
           <Box sx={{ width: '100%' }}>
@@ -85,7 +92,7 @@ return (
             variant="contained"
             type="submit"
             size="medium"
-            disabled={!file}
+            disabled={!file || !issuerName}
             onClick={() => submit()}
             className="confirm-button"
           >

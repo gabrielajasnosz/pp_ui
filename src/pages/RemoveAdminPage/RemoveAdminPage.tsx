@@ -58,6 +58,7 @@ export const RemoveAdminPage = () => {
               type={'submit'}
               size={'medium'}
               onClick={submitForm}
+              disabled={!adminAddress}
               className="confirm-button"
             >
               Remove admin

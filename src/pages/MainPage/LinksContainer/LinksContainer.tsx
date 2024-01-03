@@ -39,7 +39,7 @@ export const LinksContainer: React.FC = () => {
         <CircularProgress />
       ) : (
         <>
-          <span className={'form-layout__header'}>Hello Name!</span>
+          <span className={'form-layout__header'}>Hello!</span>
           <List
             sx={{ width: '100%', maxWidth: 360 }}
             subheader={

@@ -59,6 +59,7 @@ export const RemoveIssuerPage = () => {
               size={'medium'}
               onClick={submitForm}
               className="confirm-button"
+              disabled={!issuerAddress}
             >
               Remove issuer
             </Button>

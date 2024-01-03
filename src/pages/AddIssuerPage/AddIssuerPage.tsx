@@ -60,6 +60,7 @@ export const AddIssuerPage = () => {
               size={'medium'}
               onClick={submitForm}
               className="confirm-button"
+              disabled={!newIssuerAddress}
             >
               Add issuer
             </Button>
