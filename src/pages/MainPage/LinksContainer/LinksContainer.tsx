@@ -25,7 +25,13 @@ export const LinksContainer: React.FC = () => {
   const [manageCertificatesOpened, setManageCertificatesOpened] =
     React.useState(false);
   const [manageIssuersOpened, setManageIssuersOpened] = React.useState(false);
-  const { isUserTrustedIssuer, isConnecting } = useMetaMask();
+  const [manageAdminsOpened, setManageAdminsOpened] = React.useState(false);
+  const {
+    isUserTrustedIssuer,
+    isUserAdmin,
+    isUserContractOwner,
+    isConnecting,
+  } = useMetaMask();
 
   return (
     <div className={'form-layout'}>
@@ -119,6 +125,11 @@ export const LinksContainer: React.FC = () => {
                     </ListItemButton>
                   </List>
                 </Collapse>
+              </>
+            )}
+
+            {isUserAdmin && (
+              <>
                 <Divider />
                 <ListItemButton
                   onClick={() => setManageIssuersOpened(!manageIssuersOpened)}
@@ -150,6 +161,45 @@ export const LinksContainer: React.FC = () => {
                         <PersonRemoveIcon />
                       </ListItemIcon>
                       <ListItemText primary="Remove issuer" />
+                    </ListItemButton>
+                  </List>
+                </Collapse>
+              </>
+            )}
+
+            {isUserContractOwner && (
+              <>
+                <Divider />
+                <ListItemButton
+                  onClick={() => setManageAdminsOpened(!manageAdminsOpened)}
+                >
+                  <ListItemIcon>
+                    <ManageAccountsIcon color={'success'} />
+                  </ListItemIcon>
+                  <ListItemText primary="Manage admins" />
+                  {manageAdminsOpened ? <ExpandLess /> : <ExpandMore />}
+                </ListItemButton>
+                <Collapse in={manageAdminsOpened} timeout="auto" unmountOnExit>
+                  <List component="div" disablePadding>
+                    <ListItemButton
+                      sx={{ pl: 4 }}
+                      component="a"
+                      href="/add-admin"
+                    >
+                      <ListItemIcon>
+                        <PersonAddIcon />
+                      </ListItemIcon>
+                      <ListItemText primary="Add admin" />
+                    </ListItemButton>
+                    <ListItemButton
+                      sx={{ pl: 4 }}
+                      component="a"
+                      href="/remove-admin"
+                    >
+                      <ListItemIcon>
+                        <PersonRemoveIcon />
+                      </ListItemIcon>
+                      <ListItemText primary="Remove admin" />
                     </ListItemButton>
                   </List>
                 </Collapse>
