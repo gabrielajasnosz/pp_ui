@@ -10,12 +10,13 @@ import {
 } from '../../../components/CustomSnackbar/CustomSnackbar';
 
 export const AddCertificateForm = () => {
-  const [receiverName, setReceiverName] = useState<string>('');
-  const [receiverLastName, setReceiverLastName] = useState<string>('');
-  const [receiverEmail, setReceiverEmail] = useState<string>('');
-  const [certName, setCertName] = useState<string>('');
-  const [certDuration, setCertDuration] = useState<string>('');
-  const [fileName, setFileName] = useState<string | undefined>(undefined);
+  const [receiverName, setReceiverName] = useState<string | undefined>('');
+  const [receiverLastName, setReceiverLastName] = useState<string | undefined>();
+  const [receiverEmail, setReceiverEmail] = useState<string | undefined>();
+  const [certName, setCertName] = useState<string | undefined>();
+  const [issuerName, setIssuerName] = useState<string | undefined>();
+  const [certDuration, setCertDuration] = useState<string | undefined>();
+  const [fileName, setFileName] = useState<string | undefined>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [snackbar, setSnackbar] = useState<SnackbarType>({
     opened: false,
@@ -32,12 +33,12 @@ export const AddCertificateForm = () => {
       service
         .addCertificate(
           hash,
-          receiverName,
-          receiverLastName,
-          receiverEmail,
-          certDuration,
-          certName,
-          "PK"
+          receiverName!,
+          receiverLastName!,
+          receiverEmail!,
+          certDuration!,
+          certName!,
+          issuerName!
         )
         .then((r) => {
           setIsLoading(false);
@@ -86,10 +87,20 @@ export const AddCertificateForm = () => {
           onChange={setReceiverEmail}
         />
         <Input
-          label={'Cert duration'}
+          label={'Validity duration'}
           type="number"
           required={true}
           onChange={setCertDuration}
+        />
+        <Input
+          label={'Certificate name'}
+          required={true}
+          onChange={setCertName}
+        />
+        <Input
+          label={'Issuer name'}
+          required={true}
+          onChange={setIssuerName}
         />
         <FileUploadButton fileName={fileName} onChange={handleOnChange} label={'Upload pdf file'}/>
         {isLoading ? (
@@ -101,6 +112,7 @@ export const AddCertificateForm = () => {
             variant="contained"
             type="submit"
             size="medium"
+            disabled={!receiverName || !receiverLastName || !receiverEmail || !certName || !certDuration || !issuerName || !fileName}
             onClick={() => submitForm()}
             className="confirm-button"
           >
