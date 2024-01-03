@@ -5,6 +5,67 @@
 */
 export const contractABI = [
 	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "string",
+				"name": "checksum",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "reason",
+				"type": "string"
+			}
+		],
+		"name": "FailedAddingCertificate",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "string",
+				"name": "checksum",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "recipient_name",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "recipient_surname",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "recipient_email",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "issuer_identification_name",
+				"type": "string"
+			}
+		],
+		"name": "SuccessfullyAddedCertificate",
+		"type": "event"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "address",
@@ -35,18 +96,23 @@ export const contractABI = [
 				"type": "string"
 			},
 			{
+				"internalType": "string",
+				"name": "_recipient_email",
+				"type": "string"
+			},
+			{
 				"internalType": "uint256",
 				"name": "_days_valid",
 				"type": "uint256"
 			},
 			{
 				"internalType": "string",
-				"name": "_cert_url",
+				"name": "_cert_name",
 				"type": "string"
 			},
 			{
 				"internalType": "string",
-				"name": "_issuerIdentificationName",
+				"name": "_issuer_identification_name",
 				"type": "string"
 			}
 		],
@@ -71,6 +137,25 @@ export const contractABI = [
 	{
 		"inputs": [
 			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "admins",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"components": [
 					{
 						"internalType": "string",
@@ -88,13 +173,18 @@ export const contractABI = [
 						"type": "string"
 					},
 					{
+						"internalType": "string",
+						"name": "recipient_email",
+						"type": "string"
+					},
+					{
 						"internalType": "uint256",
 						"name": "days_valid",
 						"type": "uint256"
 					},
 					{
 						"internalType": "string",
-						"name": "cert_url",
+						"name": "cert_name",
 						"type": "string"
 					},
 					{
@@ -111,119 +201,6 @@ export const contractABI = [
 		"name": "bulkUploadCertificates",
 		"outputs": [],
 		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_admin",
-				"type": "address"
-			}
-		],
-		"name": "removeAdmin",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"stateMutability": "nonpayable",
-		"type": "constructor"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"internalType": "string",
-				"name": "checksum",
-				"type": "string"
-			},
-			{
-				"indexed": false,
-				"internalType": "string",
-				"name": "reason",
-				"type": "string"
-			}
-		],
-		"name": "FailedAddingCertificate",
-		"type": "event"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "_checksum",
-				"type": "string"
-			}
-		],
-		"name": "invalidate",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_issuer",
-				"type": "address"
-			}
-		],
-		"name": "removeTrustedIssuer",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"internalType": "string",
-				"name": "checksum",
-				"type": "string"
-			},
-			{
-				"indexed": false,
-				"internalType": "string",
-				"name": "recipient_name",
-				"type": "string"
-			},
-			{
-				"indexed": false,
-				"internalType": "string",
-				"name": "recipient_surname",
-				"type": "string"
-			},
-			{
-				"indexed": false,
-				"internalType": "string",
-				"name": "issuer_identification_name",
-				"type": "string"
-			}
-		],
-		"name": "SuccessfullyAddedCertificate",
-		"type": "event"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"name": "admins",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -254,7 +231,7 @@ export const contractABI = [
 					},
 					{
 						"internalType": "string",
-						"name": "certUrl",
+						"name": "certName",
 						"type": "string"
 					},
 					{
@@ -267,6 +244,11 @@ export const contractABI = [
 							{
 								"internalType": "string",
 								"name": "surname",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "email",
 								"type": "string"
 							}
 						],
@@ -322,7 +304,7 @@ export const contractABI = [
 					},
 					{
 						"internalType": "string",
-						"name": "certUrl",
+						"name": "certName",
 						"type": "string"
 					},
 					{
@@ -335,6 +317,11 @@ export const contractABI = [
 							{
 								"internalType": "string",
 								"name": "surname",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "email",
 								"type": "string"
 							}
 						],
@@ -390,7 +377,7 @@ export const contractABI = [
 					},
 					{
 						"internalType": "string",
-						"name": "certUrl",
+						"name": "certName",
 						"type": "string"
 					},
 					{
@@ -403,6 +390,11 @@ export const contractABI = [
 							{
 								"internalType": "string",
 								"name": "surname",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "email",
 								"type": "string"
 							}
 						],
@@ -435,6 +427,19 @@ export const contractABI = [
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_checksum",
+				"type": "string"
+			}
+		],
+		"name": "invalidate",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -492,6 +497,32 @@ export const contractABI = [
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_admin",
+				"type": "address"
+			}
+		],
+		"name": "removeAdmin",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_issuer",
+				"type": "address"
+			}
+		],
+		"name": "removeTrustedIssuer",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{

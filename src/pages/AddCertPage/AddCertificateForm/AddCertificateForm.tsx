@@ -12,7 +12,8 @@ import {
 export const AddCertificateForm = () => {
   const [receiverName, setReceiverName] = useState<string>('');
   const [receiverLastName, setReceiverLastName] = useState<string>('');
-  const [certUrl, setCertUrl] = useState<string>('');
+  const [receiverEmail, setReceiverEmail] = useState<string>('');
+  const [certName, setCertName] = useState<string>('');
   const [certDuration, setCertDuration] = useState<string>('');
   const [fileName, setFileName] = useState<string | undefined>(undefined);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -33,8 +34,10 @@ export const AddCertificateForm = () => {
           hash,
           receiverName,
           receiverLastName,
+          receiverEmail,
           certDuration,
-          certUrl,
+          certName,
+          "PK"
         )
         .then((r) => {
           setIsLoading(false);
@@ -76,6 +79,11 @@ export const AddCertificateForm = () => {
           label={'Receiver last name'}
           required={true}
           onChange={setReceiverLastName}
+        />
+        <Input
+          label={'Receiver email'}
+          required={true}
+          onChange={setReceiverEmail}
         />
         <Input
           label={'Cert duration'}

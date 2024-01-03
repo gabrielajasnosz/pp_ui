@@ -76,7 +76,7 @@ export const CheckCertPage: React.FC = () => {
                       <TableRow>
                         <TableCell>Receiver</TableCell>
                         <TableCell>
-                          {response.firstName} {response.secondName}
+                          {response.firstName} {response.secondName} {response.email}
                         </TableCell>
                       </TableRow>
                       <TableRow>

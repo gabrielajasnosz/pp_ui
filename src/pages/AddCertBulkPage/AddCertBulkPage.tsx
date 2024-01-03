@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { CertBulkDto, CertResponse } from '../../utils'
+import { CertBulkDto } from '../../utils'
 import { FileUploadButton } from '../../components/FileUploadButton/FileUploadButton'
 import { Box, Button, LinearProgress } from '@mui/material'
 import { addCertificates } from '../../services/CertificateService'
@@ -39,9 +39,10 @@ export const AddCertBulkPage = () => {
             cert.checksum,
             cert.recipientName,
             cert.recipientSurname,
+            cert.recipientEmail,
             cert.daysValid,
-            cert.certUrl,
-            cert.owner
+            cert.certName,
+            cert.issuer
           ]);
           
           service
