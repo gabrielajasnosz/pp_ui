@@ -66,13 +66,7 @@ export const contractABI = [
     type: 'event',
   },
   {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '_admin',
-        type: 'address',
-      },
-    ],
+    inputs: [{ internalType: 'address', name: '_admin', type: 'address' }],
     name: 'addAdmin',
     outputs: [],
     stateMutability: 'nonpayable',
@@ -86,25 +80,20 @@ export const contractABI = [
         type: 'string',
       },
       {
-        internalType: 'string',
-        name: '_recipient_name',
-        type: 'string',
+        components: [
+          { internalType: 'string', name: 'name', type: 'string' },
+          {
+            internalType: 'string',
+            name: 'surname',
+            type: 'string',
+          },
+          { internalType: 'string', name: 'email', type: 'string' },
+        ],
+        internalType: 'struct CertificateRegistry.Recipient',
+        name: '_recipient',
+        type: 'tuple',
       },
-      {
-        internalType: 'string',
-        name: '_recipient_surname',
-        type: 'string',
-      },
-      {
-        internalType: 'string',
-        name: '_recipient_email',
-        type: 'string',
-      },
-      {
-        internalType: 'uint256',
-        name: '_days_valid',
-        type: 'uint256',
-      },
+      { internalType: 'uint256', name: '_days_valid', type: 'uint256' },
       {
         internalType: 'string',
         name: '_cert_name',
@@ -122,34 +111,16 @@ export const contractABI = [
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '_issuer',
-        type: 'address',
-      },
-    ],
+    inputs: [{ internalType: 'address', name: '_issuer', type: 'address' }],
     name: 'addTrustedIssuer',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
+    inputs: [{ internalType: 'address', name: '', type: 'address' }],
     name: 'admins',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
-      },
-    ],
+    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
     stateMutability: 'view',
     type: 'function',
   },
@@ -163,25 +134,20 @@ export const contractABI = [
             type: 'string',
           },
           {
-            internalType: 'string',
-            name: 'recipient_name',
-            type: 'string',
+            components: [
+              { internalType: 'string', name: 'name', type: 'string' },
+              {
+                internalType: 'string',
+                name: 'surname',
+                type: 'string',
+              },
+              { internalType: 'string', name: 'email', type: 'string' },
+            ],
+            internalType: 'struct CertificateRegistry.Recipient',
+            name: 'recipient',
+            type: 'tuple',
           },
-          {
-            internalType: 'string',
-            name: 'recipient_surname',
-            type: 'string',
-          },
-          {
-            internalType: 'string',
-            name: 'recipient_email',
-            type: 'string',
-          },
-          {
-            internalType: 'uint256',
-            name: 'days_valid',
-            type: 'uint256',
-          },
+          { internalType: 'uint256', name: 'days_valid', type: 'uint256' },
           {
             internalType: 'string',
             name: 'cert_name',
@@ -214,21 +180,13 @@ export const contractABI = [
             name: 'checksum',
             type: 'string',
           },
-          {
-            internalType: 'uint256',
-            name: 'issueDate',
-            type: 'uint256',
-          },
+          { internalType: 'uint256', name: 'issueDate', type: 'uint256' },
           {
             internalType: 'uint256',
             name: 'expireDate',
             type: 'uint256',
           },
-          {
-            internalType: 'address',
-            name: 'issuer',
-            type: 'address',
-          },
+          { internalType: 'address', name: 'issuer', type: 'address' },
           {
             internalType: 'string',
             name: 'certName',
@@ -236,21 +194,13 @@ export const contractABI = [
           },
           {
             components: [
-              {
-                internalType: 'string',
-                name: 'name',
-                type: 'string',
-              },
+              { internalType: 'string', name: 'name', type: 'string' },
               {
                 internalType: 'string',
                 name: 'surname',
                 type: 'string',
               },
-              {
-                internalType: 'string',
-                name: 'email',
-                type: 'string',
-              },
+              { internalType: 'string', name: 'email', type: 'string' },
             ],
             internalType: 'struct CertificateRegistry.Recipient',
             name: 'recipient',
@@ -271,13 +221,7 @@ export const contractABI = [
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'string',
-        name: '_checksum',
-        type: 'string',
-      },
-    ],
+    inputs: [{ internalType: 'string', name: '_checksum', type: 'string' }],
     name: 'getCertificate',
     outputs: [
       {
@@ -287,21 +231,13 @@ export const contractABI = [
             name: 'checksum',
             type: 'string',
           },
-          {
-            internalType: 'uint256',
-            name: 'issueDate',
-            type: 'uint256',
-          },
+          { internalType: 'uint256', name: 'issueDate', type: 'uint256' },
           {
             internalType: 'uint256',
             name: 'expireDate',
             type: 'uint256',
           },
-          {
-            internalType: 'address',
-            name: 'issuer',
-            type: 'address',
-          },
+          { internalType: 'address', name: 'issuer', type: 'address' },
           {
             internalType: 'string',
             name: 'certName',
@@ -309,21 +245,13 @@ export const contractABI = [
           },
           {
             components: [
-              {
-                internalType: 'string',
-                name: 'name',
-                type: 'string',
-              },
+              { internalType: 'string', name: 'name', type: 'string' },
               {
                 internalType: 'string',
                 name: 'surname',
                 type: 'string',
               },
-              {
-                internalType: 'string',
-                name: 'email',
-                type: 'string',
-              },
+              { internalType: 'string', name: 'email', type: 'string' },
             ],
             internalType: 'struct CertificateRegistry.Recipient',
             name: 'recipient',
@@ -344,13 +272,7 @@ export const contractABI = [
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '_issuer',
-        type: 'address',
-      },
-    ],
+    inputs: [{ internalType: 'address', name: '_issuer', type: 'address' }],
     name: 'getCertificatesIssuedBy',
     outputs: [
       {
@@ -360,21 +282,13 @@ export const contractABI = [
             name: 'checksum',
             type: 'string',
           },
-          {
-            internalType: 'uint256',
-            name: 'issueDate',
-            type: 'uint256',
-          },
+          { internalType: 'uint256', name: 'issueDate', type: 'uint256' },
           {
             internalType: 'uint256',
             name: 'expireDate',
             type: 'uint256',
           },
-          {
-            internalType: 'address',
-            name: 'issuer',
-            type: 'address',
-          },
+          { internalType: 'address', name: 'issuer', type: 'address' },
           {
             internalType: 'string',
             name: 'certName',
@@ -382,21 +296,13 @@ export const contractABI = [
           },
           {
             components: [
-              {
-                internalType: 'string',
-                name: 'name',
-                type: 'string',
-              },
+              { internalType: 'string', name: 'name', type: 'string' },
               {
                 internalType: 'string',
                 name: 'surname',
                 type: 'string',
               },
-              {
-                internalType: 'string',
-                name: 'email',
-                type: 'string',
-              },
+              { internalType: 'string', name: 'email', type: 'string' },
             ],
             internalType: 'struct CertificateRegistry.Recipient',
             name: 'recipient',
@@ -419,128 +325,56 @@ export const contractABI = [
   {
     inputs: [],
     name: 'getChecksums',
-    outputs: [
-      {
-        internalType: 'string[]',
-        name: '',
-        type: 'string[]',
-      },
-    ],
+    outputs: [{ internalType: 'string[]', name: '', type: 'string[]' }],
     stateMutability: 'view',
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'string',
-        name: '_checksum',
-        type: 'string',
-      },
-    ],
+    inputs: [{ internalType: 'string', name: '_checksum', type: 'string' }],
     name: 'invalidate',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '_admin',
-        type: 'address',
-      },
-    ],
+    inputs: [{ internalType: 'address', name: '_admin', type: 'address' }],
     name: 'isAdmin',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
-      },
-    ],
+    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
     stateMutability: 'view',
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '_owner',
-        type: 'address',
-      },
-    ],
+    inputs: [{ internalType: 'address', name: '_owner', type: 'address' }],
     name: 'isContractOwner',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
-      },
-    ],
+    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
     stateMutability: 'view',
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '_issuer',
-        type: 'address',
-      },
-    ],
+    inputs: [{ internalType: 'address', name: '_issuer', type: 'address' }],
     name: 'isTrustedIssuer',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
-      },
-    ],
+    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
     stateMutability: 'view',
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '_admin',
-        type: 'address',
-      },
-    ],
+    inputs: [{ internalType: 'address', name: '_admin', type: 'address' }],
     name: 'removeAdmin',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '_issuer',
-        type: 'address',
-      },
-    ],
+    inputs: [{ internalType: 'address', name: '_issuer', type: 'address' }],
     name: 'removeTrustedIssuer',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
+    inputs: [{ internalType: 'address', name: '', type: 'address' }],
     name: 'trustedIssuers',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
-      },
-    ],
+    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
     stateMutability: 'view',
     type: 'function',
   },

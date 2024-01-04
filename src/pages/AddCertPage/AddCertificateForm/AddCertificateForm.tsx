@@ -42,15 +42,8 @@ export const AddCertificateForm = () => {
           certName!,
           issuerName!,
         )
-        .then((r) => {
-          setIsLoading(false);
-          setSnackbar({
-            opened: true,
-            message: 'Certificate added successfully',
-            messageType: 'success',
-          });
-        })
-        .catch((e) => {
+        .then(() => {})
+        .catch(() => {
           setSnackbar({
             opened: true,
             message: 'Error while adding certificate.',
@@ -60,6 +53,24 @@ export const AddCertificateForm = () => {
         });
     }
   };
+
+  const subscribeEvent = () => {
+    const service = new BlockchainService();
+    service
+      .subscribeToEvent(
+        'SuccessfullyAddedCertificate(string,string,string,string,string)',
+        (hash, name, surname, email, issuer) => {
+          setIsLoading(false);
+          setSnackbar({
+            opened: true,
+            message: 'Certificate added successfully',
+            messageType: 'success',
+          });
+          service.removeListeners().then(() => {});
+        },
+      )
+      .then(() => {});
+  }
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -123,7 +134,10 @@ export const AddCertificateForm = () => {
               !issuerName ||
               !fileName
             }
-            onClick={() => submitForm()}
+            onClick={() => {
+              subscribeEvent();
+              submitForm();
+            }}
             className="confirm-button"
           >
             Add

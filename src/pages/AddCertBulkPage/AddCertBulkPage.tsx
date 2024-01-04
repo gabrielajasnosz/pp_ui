@@ -9,6 +9,7 @@ import {
   SnackbarType,
 } from '../../components/CustomSnackbar/CustomSnackbar';
 import { Input } from '../../components/Input/Input';
+import { Cert } from '../../ethereum/CertificateRepository'
 
 export const AddCertBulkPage = () => {
   const [file, setFile] = useState(null);
@@ -28,7 +29,7 @@ export const AddCertBulkPage = () => {
     service
       .subscribeToEvent(
         'SuccessfullyAddedCertificate(string,string,string,string,string)',
-        (hash, name, surname, email) => {
+        (hash, name, surname, email, issuer) => {
           if (
             backendResponse!.some(
               (x) =>
@@ -45,6 +46,7 @@ export const AddCertBulkPage = () => {
                 message: 'Certificates added successfully',
                 messageType: 'success',
               });
+              service.removeListeners().then(() => {});
             }
           }
         },
@@ -77,16 +79,19 @@ export const AddCertBulkPage = () => {
       .then((r) => {
         setBackendResponse(r);
         const service = new BlockchainService();
-        const obj: CertBulkDto[] = r;
-        const certData: string[][] = obj.map((cert) => [
-          cert.checksum,
-          cert.recipientName,
-          cert.recipientSurname,
-          cert.recipientEmail,
-          cert.daysValid,
-          cert.certName,
-          cert.issuer,
-        ]);
+        const certData: Cert[] = r.map((entry: CertBulkDto) => {
+          return {
+            checksum: entry.checksum,
+            recipient: {
+              name: entry.recipientName,
+              email: entry.recipientEmail,
+              surname: entry.recipientSurname
+            },
+            days_valid: entry.daysValid,
+            cert_name: entry.certName,
+            issuer_identification_name: entry.issuer,
+          }
+        })
 
         service
           .bulkUploadCertificates(certData)
