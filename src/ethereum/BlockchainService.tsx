@@ -1,8 +1,8 @@
-import { ethers } from 'ethers';
-import { CertificateRepository } from './CertificateRepository';
+import { ethers, Listener } from 'ethers';
+import { Cert, CertificateRepository } from './CertificateRepository'
 import { contractABI } from './ContractAbi';
 
-export const CONTRACT_ADDRESS = '0x9d3A70171ed3c07EaaEDBF01359877a0d83a7BFC';
+export const CONTRACT_ADDRESS = '0x6F8207Afb588D4E54eC43Df089c60380b59d8A5A';
 
 export class BlockchainService {
   private readonly provider: ethers.BrowserProvider;
@@ -86,17 +86,15 @@ export class BlockchainService {
     recipientEmail: string,
     daysValid: string,
     certName: string,
-    issuer: string
+    issuer: string,
   ): Promise<string> {
     const signer = await this.provider.getSigner();
     return await this.getContract(signer).addCertificate(
       checkSum,
-      recipientName,
-      recipientSurname,
-      recipientEmail,
+      { name: recipientName, surname: recipientName, email: recipientEmail},
       parseInt(daysValid),
       certName,
-      issuer
+      issuer,
     );
   }
 
@@ -130,16 +128,23 @@ export class BlockchainService {
     ).connect(signer) as CertificateRepository;
   }
 
-    /**
+  /**
         Function used to add new certificates in bulk. Only trusted issuers can perform this action.
 
         returns: Promise object of string type
     */
-  public async bulkUploadCertificates(
-    certData: string[][]
-  ): Promise<string> {
+  public async bulkUploadCertificates(certData: Cert[]): Promise<string> {
     const signer = await this.provider.getSigner();
 
     return await this.getContract(signer).bulkUploadCertificates(certData);
+  }
+
+  public async subscribeToEvent(event: string, listener: Listener) {
+    const signer = await this.provider.getSigner();
+    await this.getContract(signer).on(event, listener);
+  }
+
+  public async removeListeners() {
+    await this.provider.removeAllListeners()
   }
 }

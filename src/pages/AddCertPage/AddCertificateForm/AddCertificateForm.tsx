@@ -11,7 +11,9 @@ import {
 
 export const AddCertificateForm = () => {
   const [receiverName, setReceiverName] = useState<string | undefined>('');
-  const [receiverLastName, setReceiverLastName] = useState<string | undefined>();
+  const [receiverLastName, setReceiverLastName] = useState<
+    string | undefined
+  >();
   const [receiverEmail, setReceiverEmail] = useState<string | undefined>();
   const [certName, setCertName] = useState<string | undefined>();
   const [issuerName, setIssuerName] = useState<string | undefined>();
@@ -38,17 +40,10 @@ export const AddCertificateForm = () => {
           receiverEmail!,
           certDuration!,
           certName!,
-          issuerName!
+          issuerName!,
         )
-        .then((r) => {
-          setIsLoading(false);
-          setSnackbar({
-            opened: true,
-            message: 'Certificate added successfully',
-            messageType: 'success',
-          });
-        })
-        .catch((e) => {
+        .then(() => {})
+        .catch(() => {
           setSnackbar({
             opened: true,
             message: 'Error while adding certificate.',
@@ -58,6 +53,24 @@ export const AddCertificateForm = () => {
         });
     }
   };
+
+  const subscribeEvent = () => {
+    const service = new BlockchainService();
+    service
+      .subscribeToEvent(
+        'SuccessfullyAddedCertificate(string,string,string,string,string)',
+        (hash, name, surname, email, issuer) => {
+          setIsLoading(false);
+          setSnackbar({
+            opened: true,
+            message: 'Certificate added successfully',
+            messageType: 'success',
+          });
+          service.removeListeners().then(() => {});
+        },
+      )
+      .then(() => {});
+  }
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -97,12 +110,12 @@ export const AddCertificateForm = () => {
           required={true}
           onChange={setCertName}
         />
-        <Input
-          label={'Issuer name'}
-          required={true}
-          onChange={setIssuerName}
+        <Input label={'Issuer name'} required={true} onChange={setIssuerName} />
+        <FileUploadButton
+          fileName={fileName}
+          onChange={handleOnChange}
+          label={'Upload pdf file'}
         />
-        <FileUploadButton fileName={fileName} onChange={handleOnChange} label={'Upload pdf file'}/>
         {isLoading ? (
           <Box sx={{ width: '100%' }}>
             <LinearProgress />
@@ -112,8 +125,19 @@ export const AddCertificateForm = () => {
             variant="contained"
             type="submit"
             size="medium"
-            disabled={!receiverName || !receiverLastName || !receiverEmail || !certName || !certDuration || !issuerName || !fileName}
-            onClick={() => submitForm()}
+            disabled={
+              !receiverName ||
+              !receiverLastName ||
+              !receiverEmail ||
+              !certName ||
+              !certDuration ||
+              !issuerName ||
+              !fileName
+            }
+            onClick={() => {
+              subscribeEvent();
+              submitForm();
+            }}
             className="confirm-button"
           >
             Add

@@ -22,7 +22,7 @@ export const CustomSnackbar = ({
       open={snackbarValues.opened}
       onClose={() => setSnackbarValues({ ...snackbarValues, opened: false })}
       autoHideDuration={6000}
-      sx={{ marginTop: '100px' }}
+      sx={{ marginTop: '20px' }}
     >
       <Alert
         onClose={() => setSnackbarValues({ ...snackbarValues, opened: false })}

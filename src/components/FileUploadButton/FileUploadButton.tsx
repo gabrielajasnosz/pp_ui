@@ -5,7 +5,7 @@ import React from 'react';
 export type Props = {
   fileName: string | undefined;
   onChange: (e: any) => void;
-  label: string
+  label: string;
 };
 
 export const FileUploadButton = ({ fileName, onChange, label }: Props) => (

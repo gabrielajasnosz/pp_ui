@@ -62,7 +62,11 @@ export const InvalidateCertificateForm: React.FC = () => {
     <div className={'form-layout'}>
       <span className={'form-layout__header'}>Invalidate certificate</span>
       <div className={'form-layout__content'}>
-        <FileUploadButton fileName={fileName} onChange={handleOnChange} label={'Upload pdf file'} />
+        <FileUploadButton
+          fileName={fileName}
+          onChange={handleOnChange}
+          label={'Upload pdf file'}
+        />
         {isLoading ? (
           <Box sx={{ width: '100%' }}>
             <LinearProgress />

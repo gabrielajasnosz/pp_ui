@@ -46,11 +46,11 @@ export namespace Utils {
 }
 
 export interface CertBulkDto {
-  checksum: string,
-  recipientName: string,
-  recipientSurname: string,
-  recipientEmail: string,
-  daysValid: string,
-  certName: string,
-  issuer: string
+  checksum: string;
+  recipientName: string;
+  recipientSurname: string;
+  recipientEmail: string;
+  daysValid: string;
+  certName: string;
+  issuer: string;
 }
