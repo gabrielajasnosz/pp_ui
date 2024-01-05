@@ -1,15 +1,15 @@
-import { ethers, Listener } from 'ethers';
+import { ethers, utils } from 'ethers'
 import { Cert, CertificateRepository } from './CertificateRepository'
 import { contractABI } from './ContractAbi';
 
-export const CONTRACT_ADDRESS = '0x6F8207Afb588D4E54eC43Df089c60380b59d8A5A';
+export const CONTRACT_ADDRESS = '0x1dFEc67990A80bAa971559d4EF6dA559f5c14EBD';
 
 export class BlockchainService {
-  private readonly provider: ethers.BrowserProvider;
+  private readonly provider: ethers.providers.Web3Provider;
   private contractAddress: string;
 
   constructor() {
-    this.provider = new ethers.BrowserProvider(window.ethereum);
+    this.provider = new ethers.providers.Web3Provider(window.ethereum);
     this.contractAddress = CONTRACT_ADDRESS;
   }
 
@@ -22,7 +22,7 @@ export class BlockchainService {
     */
 
   public async getCertificate(checkSum: string): Promise<string> {
-    const provider = new ethers.JsonRpcProvider();
+    const provider = new ethers.providers.JsonRpcProvider();
     const contract = await new ethers.Contract(
       CONTRACT_ADDRESS,
       contractABI,
@@ -46,7 +46,7 @@ export class BlockchainService {
 
   public async isTrustedIssuer(): Promise<string> {
     const signer = await this.provider.getSigner();
-    return await this.getContract(signer).isTrustedIssuer(signer.address);
+    return await this.getContract(signer).isTrustedIssuer(await signer.getAddress());
   }
 
   public async addAdmin(adminAddress: string): Promise<string> {
@@ -61,12 +61,12 @@ export class BlockchainService {
 
   public async isAdmin(): Promise<string> {
     const signer = await this.provider.getSigner();
-    return await this.getContract(signer).isAdmin(signer.address);
+    return await this.getContract(signer).isAdmin(await signer.getAddress());
   }
 
   public async isContractOwner(): Promise<string> {
     const signer = await this.provider.getSigner();
-    return await this.getContract(signer).isContractOwner(signer.address);
+    return await this.getContract(signer).isContractOwner(await signer.getAddress());
   }
 
   /**
@@ -120,7 +120,7 @@ export class BlockchainService {
     return await this.getContract(signer).getCertificatesIssuedBy(issuer);
   }
 
-  private getContract(signer: ethers.ContractRunner) {
+  private getContract(signer: ethers.Signer) {
     return new ethers.Contract(
       this.contractAddress,
       contractABI,
@@ -139,9 +139,14 @@ export class BlockchainService {
     return await this.getContract(signer).bulkUploadCertificates(certData);
   }
 
-  public async subscribeToEvent(event: string, listener: Listener) {
+  public async subscribeToEvent(event: string, listener: (...args: Array<any>) => void) {
     const signer = await this.provider.getSigner();
-    await this.getContract(signer).on(event, listener);
+    const filter = {
+      topics: [
+        utils.id(event),
+      ]
+    };
+    this.getContract(signer).on(filter, listener);
   }
 
   public async removeListeners() {
