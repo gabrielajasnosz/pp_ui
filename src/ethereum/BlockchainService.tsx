@@ -2,7 +2,7 @@ import { ethers, utils } from 'ethers';
 import { Cert, CertificateRepository } from './CertificateRepository';
 import { contractABI } from './ContractAbi';
 
-export const CONTRACT_ADDRESS = '0xFDA340636AF0679B88dEA4EE5E99c330c0fC6F13';
+export const CONTRACT_ADDRESS = '0x9A369CA70727a28dc1228f5a2308f3B06898aD71';
 
 export class BlockchainService {
   private readonly provider: ethers.providers.Web3Provider;
@@ -95,7 +95,7 @@ export class BlockchainService {
     const signer = await this.provider.getSigner();
     return await this.getContract(signer).addCertificate(
       checkSum,
-      { name: recipientName, surname: recipientName, email: recipientEmail },
+      { name: recipientName, surname: recipientSurname, email: recipientEmail},
       parseInt(daysValid),
       certName,
       issuer,

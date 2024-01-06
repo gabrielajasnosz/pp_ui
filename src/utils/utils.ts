@@ -56,3 +56,11 @@ export interface CertBulkDto {
   certName: string;
   issuer: string;
 }
+
+export interface CertificateEmailRequest {
+  checksum: string;
+  recipientName: string;
+  recipientSurname: string;
+  recipientEmail: string;
+  issuer: string;
+}

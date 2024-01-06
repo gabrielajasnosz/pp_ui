@@ -8,8 +8,11 @@ import {
   CustomSnackbar,
   SnackbarType,
 } from '../../../components/CustomSnackbar/CustomSnackbar';
+import {sendEmail} from "../../../services/CertificateService";
+import {CertificateEmailRequest} from "../../../utils";
 
 export const AddCertificateForm = () => {
+  const [file, setFile] = useState(null);
   const [receiverName, setReceiverName] = useState<string | undefined>('');
   const [receiverLastName, setReceiverLastName] = useState<
     string | undefined
@@ -55,11 +58,30 @@ export const AddCertificateForm = () => {
   };
 
   const subscribeEvent = () => {
+    const formData = new FormData();
+
     const service = new BlockchainService();
     service
       .subscribeToEvent(
-        'SuccessfullyAddedCertificate(string,string,string,string,string)',
-        (hash, name, surname, email, issuer) => {
+        'SuccessfullyAddedCertificate(string,string,string,string,string,string)',
+          (index, checksum, recipient_name, recipient_surname, recipient_email, issuer_identification_name) => {
+
+          const certificate: CertificateEmailRequest = {
+            checksum: checksum,
+            recipientName: recipient_name,
+            recipientSurname: recipient_surname,
+            recipientEmail: recipient_email,
+            issuer: issuer_identification_name,
+          }
+
+          // @ts-ignore
+          formData.append('file', file);
+          formData.append('emailRequest', JSON.stringify(certificate));
+
+          sendEmail(formData)
+              .then(()=>{})
+              .catch((e)=>console.log(e));
+
           setIsLoading(false);
           setSnackbar({
             opened: true,
@@ -74,6 +96,8 @@ export const AddCertificateForm = () => {
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
+    // @ts-ignore
+    setFile(file);
     if (file) {
       setFileName(file.name);
       getHash(file);
