@@ -2,7 +2,7 @@ import { ethers, utils } from 'ethers';
 import { Cert, CertificateRepository } from './CertificateRepository';
 import { contractABI } from './ContractAbi';
 
-export const CONTRACT_ADDRESS = '0x9A369CA70727a28dc1228f5a2308f3B06898aD71';
+export const CONTRACT_ADDRESS = '0x1dFEc67990A80bAa971559d4EF6dA559f5c14EBD';
 
 export class BlockchainService {
   private readonly provider: ethers.providers.Web3Provider;

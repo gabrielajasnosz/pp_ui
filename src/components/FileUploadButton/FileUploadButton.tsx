@@ -13,7 +13,7 @@ export const FileUploadButton = ({ fileName, onChange, label }: Props) => (
     variant={fileName ? 'text' : 'outlined'}
     component="label"
     startIcon={<CloudUploadIcon />}
-    sx={{ fontWeight: 'bold' }}
+    sx={{ fontWeight: 'bold', wordBreak: 'break-all' }}
   >
     {!fileName ? label : fileName}
     <input type="file" style={{ display: 'none' }} onChange={onChange} />

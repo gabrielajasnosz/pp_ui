@@ -11,21 +11,15 @@ type Props = {
   onClick: (checksum: string) => void;
 };
 
-export const CertItem: React.FC<Props> = ({ cert, onClick }) => (
-  <ListItem
-    secondaryAction={
-      <IconButton
-        edge="end"
-        aria-label="delete"
-        onClick={() => onClick(cert.checksum)}
-      >
-        <DeleteIcon />
-      </IconButton>
-    }
-  >
-    <ListItemText
-      primary={`${cert.firstName} ${cert.secondName}`}
-      secondary={`Checksum: ${cert.checksum.slice(0, 10)}...`}
-    />
-  </ListItem>
-);
+// export const CertItem: React.FC<Props> = ({ cert, onClick }) => (
+//   <div
+//     secondaryAction={
+//
+//     }
+//   >
+//     <ListItemText
+//       primary={`${cert.firstName} ${cert.secondName}`}
+//       secondary={`Checksum: ${cert.checksum.slice(0, 10)}...`}
+//     />
+//   </div>
+// );
