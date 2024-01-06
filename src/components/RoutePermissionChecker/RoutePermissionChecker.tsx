@@ -1,4 +1,4 @@
-import React, { useEffect, ReactElement } from 'react';
+import React, { useEffect, ReactElement, useRef } from 'react'
 import { useMetaMask } from '../../hooks/useMetaMask';
 import { useNavigate } from 'react-router';
 

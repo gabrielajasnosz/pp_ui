@@ -1,4 +1,4 @@
-import React, { useEffect, ReactElement, useRef } from 'react';
+import React, { useEffect, ReactElement, useRef } from 'react'
 import { useMetaMask } from '../../hooks/useMetaMask';
 
 type Permission = 'TrustedIssuer' | 'Admin' | 'Owner';
@@ -21,8 +21,8 @@ export const ConnectionChecker = ({ children }: ConnectionCheckerProps) => {
 
   const prevValue = useRef<boolean>(isConnected);
   useEffect(() => {
-    if (prevValue.current && isConnected === false) {
-      window.location.href = '/';
+    if(prevValue.current && isConnected === false) {
+      window.location.href='/';
     }
     //@ts-ignore
     prevValue.current = isConnected;

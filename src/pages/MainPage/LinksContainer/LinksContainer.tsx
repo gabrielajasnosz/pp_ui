@@ -7,6 +7,7 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  ListSubheader,
 } from '@mui/material';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import AddIcon from '@mui/icons-material/Add';
@@ -39,7 +40,9 @@ export const LinksContainer: React.FC = () => {
       ) : (
         <>
           <span className={'form-layout__header'}>Hello!</span>
-          <List sx={{ width: '100%', maxWidth: 360 }}>
+          <List
+            sx={{ width: '100%', maxWidth: 360 }}
+          >
             <ListItemButton component="a" href="/check-certificate">
               <ListItemIcon>
                 <CheckCircleOutlineIcon color="success" />

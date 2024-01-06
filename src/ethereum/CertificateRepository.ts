@@ -1,18 +1,18 @@
 import { BaseContract } from 'ethers';
 
 type Recipient = {
-  name: string;
-  surname: string;
-  email: string;
-};
+  name: string,
+  surname: string,
+  email: string
+}
 
 export type Cert = {
-  checksum: string;
-  recipient: Recipient;
-  days_valid: number;
-  cert_name: string;
-  issuer_identification_name: string;
-};
+  checksum: string,
+  recipient: Recipient,
+  days_valid: number,
+  cert_name: string,
+  issuer_identification_name: string,
+}
 
 export interface CertificateRepository extends BaseContract {
   getCertificate(_checksum: string): Promise<string>;

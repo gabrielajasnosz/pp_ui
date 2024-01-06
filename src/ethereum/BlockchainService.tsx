@@ -1,5 +1,5 @@
-import { ethers, utils } from 'ethers';
-import { Cert, CertificateRepository } from './CertificateRepository';
+import { ethers, utils } from 'ethers'
+import { Cert, CertificateRepository } from './CertificateRepository'
 import { contractABI } from './ContractAbi';
 
 export const CONTRACT_ADDRESS = '0xFDA340636AF0679B88dEA4EE5E99c330c0fC6F13';
@@ -46,9 +46,7 @@ export class BlockchainService {
 
   public async isTrustedIssuer(): Promise<string> {
     const signer = await this.provider.getSigner();
-    return await this.getContract(signer).isTrustedIssuer(
-      await signer.getAddress(),
-    );
+    return await this.getContract(signer).isTrustedIssuer(await signer.getAddress());
   }
 
   public async addAdmin(adminAddress: string): Promise<string> {
@@ -68,9 +66,7 @@ export class BlockchainService {
 
   public async isContractOwner(): Promise<string> {
     const signer = await this.provider.getSigner();
-    return await this.getContract(signer).isContractOwner(
-      await signer.getAddress(),
-    );
+    return await this.getContract(signer).isContractOwner(await signer.getAddress());
   }
 
   /**
@@ -95,7 +91,7 @@ export class BlockchainService {
     const signer = await this.provider.getSigner();
     return await this.getContract(signer).addCertificate(
       checkSum,
-      { name: recipientName, surname: recipientName, email: recipientEmail },
+      { name: recipientName, surname: recipientName, email: recipientEmail},
       parseInt(daysValid),
       certName,
       issuer,
@@ -143,18 +139,17 @@ export class BlockchainService {
     return await this.getContract(signer).bulkUploadCertificates(certData);
   }
 
-  public async subscribeToEvent(
-    event: string,
-    listener: (...args: Array<any>) => void,
-  ) {
+  public async subscribeToEvent(event: string, listener: (...args: Array<any>) => void) {
     const signer = await this.provider.getSigner();
     const filter = {
-      topics: [utils.id(event)],
+      topics: [
+        utils.id(event),
+      ]
     };
     this.getContract(signer).on(filter, listener);
   }
 
   public async removeListeners() {
-    await this.provider.removeAllListeners();
+    await this.provider.removeAllListeners()
   }
 }

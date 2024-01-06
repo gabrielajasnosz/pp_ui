@@ -70,7 +70,7 @@ export const AddCertificateForm = () => {
         },
       )
       .then(() => {});
-  };
+  }
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

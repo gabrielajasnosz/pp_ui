@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react'
 import './App.css';
 import { MainPage } from './pages/MainPage/MainPage';
-import { MetaMaskContextProvider } from './hooks/useMetaMask';
+import { MetaMaskContextProvider, useMetaMask } from './hooks/useMetaMask'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { CheckCertPage } from './pages/CheckCertPage/CheckCertPage';
 import { AddCertPage } from './pages/AddCertPage/AddCertPage';
@@ -13,7 +13,7 @@ import { IssuedCertsPage } from './pages/IssuedCertsPage/IssuedCertsPage';
 import { AddCertBulkPage } from './pages/AddCertBulkPage/AddCertBulkPage';
 import { AddAdminPage } from './pages/AddAdminPage/AddAdminPage';
 import { RemoveAdminPage } from './pages/RemoveAdminPage/RemoveAdminPage';
-import { ConnectionChecker } from './components/ConnectionChecker/ConnectionChecker';
+import { ConnectionChecker } from './components/ConnectionChecker/ConnectionChecker'
 
 const router = createBrowserRouter([
   {
@@ -90,7 +90,7 @@ const router = createBrowserRouter([
   },
 ]);
 
-const App = () => {
+const App = ()  => {
   return (
     <MetaMaskContextProvider>
       <div className="App">
@@ -100,6 +100,6 @@ const App = () => {
       </div>
     </MetaMaskContextProvider>
   );
-};
+}
 
 export default App;

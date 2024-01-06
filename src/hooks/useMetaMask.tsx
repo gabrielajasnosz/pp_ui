@@ -5,7 +5,7 @@ import React, {
   PropsWithChildren,
   useContext,
   useCallback,
-} from 'react';
+} from 'react'
 import detectEthereumProvider from '@metamask/detect-provider';
 import { BlockchainService } from '../ethereum/BlockchainService';
 
