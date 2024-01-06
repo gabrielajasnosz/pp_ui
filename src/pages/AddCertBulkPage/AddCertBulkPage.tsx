@@ -9,8 +9,7 @@ import {
   SnackbarType,
 } from '../../components/CustomSnackbar/CustomSnackbar';
 import { Input } from '../../components/Input/Input';
-import { Cert } from '../../ethereum/CertificateRepository'
-import { utils } from 'ethers'
+import { Cert } from '../../ethereum/CertificateRepository';
 
 export const AddCertBulkPage = () => {
   const [file, setFile] = useState(null);
@@ -30,7 +29,13 @@ export const AddCertBulkPage = () => {
     service
       .subscribeToEvent(
         'SuccessfullyAddedCertificate(string,string,string,string,string)',
-        (checksum, recipient_name, recipient_surname, recipient_email, issuer_identification_name) => {
+        (
+          checksum,
+          recipient_name,
+          recipient_surname,
+          recipient_email,
+          issuer_identification_name,
+        ) => {
           if (
             backendResponse!.some(
               (x) =>
@@ -86,13 +91,13 @@ export const AddCertBulkPage = () => {
             recipient: {
               name: entry.recipientName,
               email: entry.recipientEmail,
-              surname: entry.recipientSurname
+              surname: entry.recipientSurname,
             },
             days_valid: entry.daysValid,
             cert_name: entry.certName,
             issuer_identification_name: entry.issuer,
-          }
-        })
+          };
+        });
 
         service
           .bulkUploadCertificates(certData)
