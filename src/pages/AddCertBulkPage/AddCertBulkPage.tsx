@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { CertBulkDto } from '../../utils';
+import {CertBulkDto, CertificateEmailRequest} from '../../utils';
 import { FileUploadButton } from '../../components/FileUploadButton/FileUploadButton';
 import { Box, Button, LinearProgress } from '@mui/material';
-import { addCertificates } from '../../services/CertificateService';
+import {addCertificates, sendEmailsBulk} from '../../services/CertificateService';
 import { BlockchainService } from '../../ethereum/BlockchainService';
 import {
   CustomSnackbar,
@@ -10,7 +10,6 @@ import {
 } from '../../components/CustomSnackbar/CustomSnackbar';
 import { Input } from '../../components/Input/Input';
 import { Cert } from '../../ethereum/CertificateRepository'
-import { utils } from 'ethers'
 
 export const AddCertBulkPage = () => {
   const [file, setFile] = useState(null);
@@ -27,20 +26,32 @@ export const AddCertBulkPage = () => {
   const subscribe = () => {
     let eventsCounter = 0;
     const service = new BlockchainService();
+    const certificates: CertificateEmailRequest[] = [];
+
     service
       .subscribeToEvent(
-        'SuccessfullyAddedCertificate(string,string,string,string,string)',
-        (checksum, recipient_name, recipient_surname, recipient_email, issuer_identification_name) => {
+        'SuccessfullyAddedCertificate(string,string,string,string,string,string)',
+        (index, checksum, recipient_name, recipient_surname, recipient_email, issuer_identification_name) => {
           if (
             backendResponse!.some(
-              (x) =>
-                x.recipientName === recipient_name &&
-                x.recipientSurname === recipient_surname &&
-                x.recipientEmail === recipient_email,
+              (x) => x.checksum === checksum
             )
           ) {
             eventsCounter += 1;
+
+            certificates.push({
+                checksum: checksum,
+                recipientName: recipient_name,
+                recipientSurname: recipient_surname,
+                recipientEmail: recipient_email,
+                issuer: issuer_identification_name,
+            });
+
             if (eventsCounter === backendResponse!.length) {
+              sendEmailsBulk(certificates)
+                  .then(()=> {})
+                  .catch((e) => console.log(e))
+
               setIsLoading(false);
               setSnackbar({
                 opened: true,
@@ -97,7 +108,8 @@ export const AddCertBulkPage = () => {
         service
           .bulkUploadCertificates(certData)
           .then(() => {})
-          .catch(() => {
+          .catch((e) => {
+            console.log(e);
             setIsLoading(false);
             setSnackbar({
               opened: true,
@@ -106,7 +118,15 @@ export const AddCertBulkPage = () => {
             });
           });
       })
-      .catch((e) => console.log(e));
+      .catch((e) => {
+          console.log(e);
+          setIsLoading(false);
+          setSnackbar({
+            opened: true,
+            message: 'Certificates data validation failed! Check CSV file.',
+            messageType: 'error',
+          });
+        });
   };
 
   return (
