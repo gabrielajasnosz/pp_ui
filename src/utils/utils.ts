@@ -25,10 +25,12 @@ export namespace Utils {
       checksum: obj[0],
       issueDate: Array.isArray(obj[1])
         ? obj[1]
-        : new Date(parseInt(obj[1]) * 1000),
+        : //@ts-ignore
+          new Date(parseInt(obj[1].hex) * 1000),
       expireDate: Array.isArray(obj[2])
-        ? obj[1]
-        : new Date(parseInt(obj[2]) * 1000),
+        ? obj[2]
+        : //@ts-ignore
+          new Date(parseInt(obj[2].hex) * 1000),
       issuer: obj[3],
       certName: obj[4],
       firstName: obj[5][0],
