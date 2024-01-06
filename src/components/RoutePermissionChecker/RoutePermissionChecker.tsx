@@ -31,7 +31,7 @@ export const RoutePermissionChecker = ({
     if (isInfoLoaded && !hasPermission[permission]) {
       navigate('/');
     }
-  }, [isUserTrustedIssuer, isInfoLoaded]);
+  }, [isUserTrustedIssuer, isUserContractOwner, isUserAdmin, isInfoLoaded]);
 
   return <>{children}</>;
 };

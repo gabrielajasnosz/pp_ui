@@ -65,6 +65,7 @@ export const MetaMaskContextProvider = ({ children }: PropsWithChildren) => {
     if (!accounts.length) {
       // If there are no accounts, then the user is disconnected
       setWallet(disconnectedState);
+      setInfoLoaded(true);
       return;
     }
 
