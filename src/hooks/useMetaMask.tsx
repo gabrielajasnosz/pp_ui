@@ -1,11 +1,11 @@
-import {
+import React, {
   useState,
   useEffect,
   createContext,
   PropsWithChildren,
   useContext,
   useCallback,
-} from 'react';
+} from 'react'
 import detectEthereumProvider from '@metamask/detect-provider';
 import { BlockchainService } from '../ethereum/BlockchainService';
 

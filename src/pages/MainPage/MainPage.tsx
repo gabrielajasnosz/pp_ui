@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react'
 import './MainPage.scss';
 import { useMetaMask } from '../../hooks/useMetaMask';
 import { LinksContainer } from './LinksContainer/LinksContainer';
 import { ConnectToMetaMask } from './ConnectToMetaMask/ConnectToMetaMask';
-
 export const MainPage = () => {
   const {
     wallet: { accounts },

@@ -42,20 +42,6 @@ export const LinksContainer: React.FC = () => {
           <span className={'form-layout__header'}>Hello!</span>
           <List
             sx={{ width: '100%', maxWidth: 360 }}
-            subheader={
-              <ListSubheader
-                component="div"
-                sx={{
-                  backgroundColor: 'inherit',
-                  color: 'black',
-                  fontSize: '16px',
-                  fontWeight: '500',
-                  marginTop: '20px',
-                }}
-              >
-                Available actions:
-              </ListSubheader>
-            }
           >
             <ListItemButton component="a" href="/check-certificate">
               <ListItemIcon>

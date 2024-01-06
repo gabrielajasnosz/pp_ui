@@ -10,6 +10,7 @@ import {
 } from '../../components/CustomSnackbar/CustomSnackbar';
 import { Input } from '../../components/Input/Input';
 import { Cert } from '../../ethereum/CertificateRepository'
+import { utils } from 'ethers'
 
 export const AddCertBulkPage = () => {
   const [file, setFile] = useState(null);
@@ -29,13 +30,13 @@ export const AddCertBulkPage = () => {
     service
       .subscribeToEvent(
         'SuccessfullyAddedCertificate(string,string,string,string,string)',
-        (hash, name, surname, email, issuer) => {
+        (checksum, recipient_name, recipient_surname, recipient_email, issuer_identification_name) => {
           if (
             backendResponse!.some(
               (x) =>
-                x.recipientName === name &&
-                x.recipientSurname === surname &&
-                x.recipientEmail === email,
+                x.recipientName === recipient_name &&
+                x.recipientSurname === recipient_surname &&
+                x.recipientEmail === recipient_email,
             )
           ) {
             eventsCounter += 1;

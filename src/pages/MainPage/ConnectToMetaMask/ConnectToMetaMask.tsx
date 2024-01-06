@@ -4,20 +4,22 @@ import { useMetaMask } from '../../../hooks/useMetaMask';
 import './ConnectToMetaMask.scss';
 
 export const ConnectToMetaMask: React.FC = () => {
-  const { connectMetaMask } = useMetaMask();
+  const { connectMetaMask, isConnecting } = useMetaMask();
   return (
     <div className="connect-to-meta-mask">
+      <div className={"connect-to-meta-mask__info"}>
+        Connect to your metamask account
+      </div>
       <Button
-        variant="contained"
-        size={'medium'}
-        color={'secondary'}
+        variant="outlined"
+        color={'primary'}
+        disabled={isConnecting}
         onClick={() => connectMetaMask()}
+        size={'small'}
         sx={{
-          height: '50px',
-          marginTop: '5px',
           fontWeight: 'bold',
           fontSize: '16px',
-          width: '200px',
+          width: '100px',
         }}
       >
         Connect
