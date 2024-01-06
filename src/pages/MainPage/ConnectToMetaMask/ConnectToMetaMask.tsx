@@ -7,7 +7,7 @@ export const ConnectToMetaMask: React.FC = () => {
   const { connectMetaMask, isConnecting } = useMetaMask();
   return (
     <div className="connect-to-meta-mask">
-      <div className={"connect-to-meta-mask__info"}>
+      <div className={'connect-to-meta-mask__info'}>
         Connect to your metamask account
       </div>
       <Button
